@@ -1,0 +1,206 @@
+// -*- C++ -*-
+//
+//  This file is part of Siena, a wide-area event notification system.
+//  See http://www.inf.usi.ch/carzaniga/siena/
+//
+//  Authors: Antonio Carzaniga
+//  See the file AUTHORS for full details. 
+//
+//  Copyright (C) 2001-2003 University of Colorado
+//
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU General Public License
+//  as published by the Free Software Foundation; either version 2
+//  of the License, or (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307,
+//  USA, or send email to one of the authors.
+//
+//
+// $Id: simple_fwd_types.icc,v 1.9 2010-03-11 15:16:41 carzanig Exp $
+//
+#include "siena/types.h"
+#include "simple_fwd_types.h"
+
+inline siena::type_id simple_value::type() const throw() { return t; }
+inline siena::int_t simple_value::int_value() const throw() { return i; }
+inline siena::string_t simple_value::string_value() const throw() { return s; }
+inline siena::bool_t simple_value::bool_value() const throw() { return b; }
+inline siena::double_t simple_value::double_value() const throw() { return d; }
+
+inline simple_value::simple_value() throw() 
+    : t(siena::anytype_id) {}
+inline simple_value::simple_value(siena::int_t x) throw() 
+    : t(siena::int_id), i(x) {}
+inline simple_value::simple_value(siena::bool_t x) throw()
+    : t(siena::bool_id), b(x) {}
+inline simple_value::simple_value(siena::double_t x) throw()
+    : t(siena::double_id), d(x) {}
+inline simple_value::simple_value(const siena::string_t & x) throw()
+    : t(siena::string_id), s(x) {}
+
+inline simple_attribute::simple_attribute(attribute_map::const_iterator b, 
+					  attribute_map::const_iterator e) 
+    throw()
+    : i(b), end(e) {}
+
+inline siena::string_t simple_attribute::name() const throw() { return (*i).first; }
+inline siena::type_id simple_attribute::type() const throw() { return (*i).second->type(); }
+inline siena::int_t simple_attribute::int_value() const throw() { return (*i).second->int_value(); }
+inline siena::string_t simple_attribute::string_value() const throw() { return (*i).second->string_value(); }
+inline siena::bool_t simple_attribute::bool_value() const throw() { return (*i).second->bool_value(); }
+inline siena::double_t simple_attribute::double_value() const throw() { return (*i).second->double_value(); }
+
+inline bool simple_attribute::next() throw() { 
+    if (i != end) ++i;
+    return i != end;
+}
+
+inline simple_message::simple_message() throw() : attrs() {}
+
+inline simple_message::iterator * simple_message::first() const throw() {
+    if (attrs.begin() == attrs.end()) {
+	return 0;
+    } else {
+	return new simple_attribute(attrs.begin(), attrs.end());
+    }
+}
+
+inline simple_message::iterator * simple_message::find(const siena::string_t & name) const throw() {
+    attribute_map::const_iterator i = attrs.find(name);
+    if (i == attrs.end()) {
+	return 0;
+    } else { 
+	return new simple_attribute(i, attrs.end());
+    }
+}
+
+inline bool simple_message::contains(const siena::string_t & name) const throw() {
+    return attrs.find(name) != attrs.end();
+}
+
+inline bool simple_message::add(const siena::string_t & name, 
+				const simple_value * a) throw() {
+    return attrs.insert(attribute_map::value_type(name, a)).second;
+}
+
+inline simple_op_value::simple_op_value(siena::operator_id xo) throw()
+    : simple_value(), o(xo) {}
+inline simple_op_value::simple_op_value(siena::operator_id xo, 
+					siena::int_t x) throw()
+    : simple_value(x), o(xo) {}
+inline simple_op_value::simple_op_value(siena::operator_id xo, 
+					siena::bool_t x) throw()
+    : simple_value(x), o(xo) {}
+inline simple_op_value::simple_op_value(siena::operator_id xo, 
+					siena::double_t x) throw()
+    : simple_value(x), o(xo) {}
+inline simple_op_value::simple_op_value(siena::operator_id xo, 
+					const siena::string_t & x) throw()
+    : simple_value(x), o(xo) {}
+
+inline siena::operator_id simple_op_value::op() const throw() { return o; }
+
+inline siena::string_t simple_constraint::name() const throw() {
+    return (*i).first; 
+}
+inline siena::type_id simple_constraint::type() const throw() {
+    return (*i).second->type(); 
+}
+inline siena::int_t simple_constraint::int_value() const throw() {
+    return (*i).second->int_value(); 
+}
+inline siena::string_t simple_constraint::string_value() const throw() {
+    return (*i).second->string_value(); 
+}
+inline siena::bool_t simple_constraint::bool_value() const throw() {
+    return (*i).second->bool_value(); 
+}
+inline siena::double_t simple_constraint::double_value() const throw() {
+    return (*i).second->double_value(); 
+}
+inline siena::operator_id simple_constraint::op() const throw() {
+    return (*i).second->op(); 
+}
+inline bool simple_constraint::next() throw() {
+    if (i != end) ++i;
+    return i != end;
+}
+
+inline simple_constraint::simple_constraint(constraint_map::const_iterator b, 
+					    constraint_map::const_iterator e)
+    throw()
+    : i(b), end(e) {}
+
+inline simple_filter::iterator * simple_filter::first() const throw() {
+    if (constraints.begin() == constraints.end()) {
+	return 0;
+    } else {
+	return new simple_constraint(constraints.begin(), 
+				     constraints.end());
+    }
+}
+
+inline void simple_filter::add(const siena::string_t name, 
+			       const simple_op_value * v) throw() {
+    constraints.insert(constraint_map::value_type(name, v));
+}
+
+inline simple_filter::simple_filter() throw() : constraints() {}
+
+inline siena::filter::iterator * simple_predicate_i::first() const throw() {
+    return (*i)->first();
+}
+
+inline bool simple_predicate_i::next() throw() { 
+    if (i != end) ++i;
+    return i != end;
+}
+
+inline simple_predicate_i::simple_predicate_i(filter_list::const_iterator b,
+					      filter_list::const_iterator e)
+    throw()
+    : i(b), end(e) {}
+
+inline simple_predicate::iterator * simple_predicate::first() const throw() {
+    if (filters.begin() == filters.end()) {
+	return 0;
+    } else {
+	return new simple_predicate_i(filters.begin(), filters.end());
+    }
+}
+
+inline void simple_predicate::add(simple_filter * v) throw() {
+    filters.push_back(v);
+}
+
+inline simple_filter * simple_predicate::back() throw() {
+    return filters.back();
+}
+
+inline simple_predicate::simple_predicate() throw() : filters() {}
+
+inline simple_message::~simple_message() throw() {
+    for (attribute_map::const_iterator i = attrs.begin(); i != attrs.end(); ++i)
+	if (i->second) delete(i->second);
+}
+
+inline simple_filter::~simple_filter() throw() {
+    for (constraint_map::const_iterator i = constraints.begin(); 
+	 i != constraints.end(); ++i)
+	if (i->second) delete(i->second);
+}
+
+inline simple_predicate::~simple_predicate() throw() {
+    for (filter_list::const_iterator i = filters.begin(); 
+	 i != filters.end(); ++i)
+	if (*i) delete(*i);
+}
+

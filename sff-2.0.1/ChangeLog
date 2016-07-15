@@ -1,0 +1,2406 @@
+2013-10-22  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Version 2.0.1: this is a bug-fix and improvement release.  The
+	main changes are improvements of the performance timers. In
+	particular, the new version includes a fix for an error in the
+	implementation of the timers based on clock_gettime, plus a
+	completely new implementation based on the std::chrono feature of
+	C++11.
+
+2013-11-20  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* timing.h: (Timer::stop) fixed error in the implementation of the
+	timer based on clock_gettime.  Added an implementation of Timer
+	based on the std::chrono feature of C++.
+
+	* configure/build: improved configure-time selection of timer
+	features; fixed dependencies on sff_parser.hh; fixed/improved
+	handling of profiling flags.
+
+	* test/test_timers.cc: improved timer tests to avoid false positives
+	due to compiler optimizations.
+
+2013-11-15  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* timing.h: (Timer::stop) fixed bug in the adjustment of nanoseconds.
+
+2013-10-22  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Version 2.0.0: this is a major new release of the Siena Fast
+	Forwarding engine.  This release introduces a more modular design
+	of the matching and forwarding engine.  In particular, this new
+	engine is intended to support different data models and different
+	routing schemes.  In addition to the traditional attribute-based
+	data model, this new version includes support for a *tag-based*
+	data model.  This new version also includes expanded and revised
+	documentation.
+
+2013-10-22  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Makefile.am: added missing dependency between sff_scanner.o and
+	sff_parser.h; added generated sources for parser and scanner to
+	CLEANFILES; adapted to some filename changes.
+
+	* documentation: small fixes here and there; extended and corrected
+	documentation of tag-set table.
+
+	* t_table.cc: renamed t_pred -> t_tagset.
+
+2013-08-30  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* driver program: changed syntax of configuration commands to
+	shell-like commands, with less keywords and more flexibility in
+	setting parameters; statements, including configuration commands,
+	now always require a closing semicolon; added help command.
+
+	* documentation: updated examples, updated driver input syntax, new
+	page to describe command-line parameter of driver program.
+
+2013-08-23  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* driver: added prompt for interactive operation of the driver.
+
+2013-08-23  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* code cleanup: formatting, renaming of constants, uniform spacing,
+	added some assertions converted from comments to explicit code
+	assertions, renamed some include guards (.h files)
+
+	* allocator: support for long double is now conditional controlled by a
+	configuration macro (default off).
+
+	* siena::String: removed unused methods, added conversions and
+	assignment to std::string
+
+	* documentation: improved css; fixed handling of included paths; added
+	examples for tags; edited examples for attributes; fixed references to
+	new API in examples in code and separate pages; updated syntax for the
+	input to the driver program; updated and expanded general
+	documentation; updated and expanded speicific documentation (classes
+	and types); implementation of simple_attributes and simple_tags types
+	separated in .cc files; adapted allocator test not to use simple
+	types.
+
+2013-07-17  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	new tests merged into multimodal mainline.
+
+2013-07-17  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	added tests for constraints over boolean and double attributes.
+	added tests for clear and clear_recycle operations.
+
+2013-07-12  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* pointers_set: better and more modularized implementation of the hash
+	function; now using size_t instead of unsigned int.
+
+2013-07-12  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	merged new-bitvector branch.
+
+2013-07-11  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	fwd_table now uses the new bloom_filter implementation to implement
+	attribute-name sets used to perform a negative check between the
+	incoming message and potential matching filters.
+
+2013-07-11  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	bitvector and bloom_filter implementations are now in two specific
+	modules, and they interact properly.  bloom_filter is defined as a
+	template that takes the width (M) and the number of hash functions
+	(K).  The implementation uses a (fixed-size) bitvector as a storage
+	facility, which has also been redone.  bloom_filter.h also provides a
+	wrapper for a generic storage backend for a bloom filter
+	(bloom_filter_wrapper).
+
+	bc_table: fixed a bug in the use of filters counters with counter map.
+	The counter map uses the value 0 as the null value for its internal
+	hash table, so counters may not be 0.
+
+	Encoding of attribute-based data: now the encoding is better
+	modularized in attributes_encoding.h, and is generic with respect to
+	the implementation of the target container.  It is typically used with
+	a bloom filter but it could be used with any set-type container.
+
+2013-07-11  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	string index: improved implementation of a constraint set, now
+	implemented as a hash table.  Also added a corresponding test for that
+	hash table.
+
+2013-07-11  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	refactoring of bit vector functionality: We now have three types of
+	bitvectors: fixed_bitvector has a size (i.e., a width) that is fixed
+	at compile time via a template parameter; bitvector has a width that
+	is fixed at creation time; and ibitvector is dynamic.  Initial
+	redefinition of bset_t to use the new fixed_bitvector.  The idea is to
+	then build a more properly defined bloom_filter class on top of that.
+
+2013-07-12  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	fwd_table: minor algorithmic change in the handling of the selectivity
+	preprocessing.
+
+2013-07-10  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	added TagsBtrieTable and TTable algorithms to help message (T and Tt,
+	respectively).
+
+2013-07-10  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	bdd/zdd tables: added missing initialization of true_node.
+
+2013-07-09  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	merged first "tags" implementation and related fixes.
+
+2013-07-09  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	sff_parser: fixed grammar conflicts.
+
+2013-07-09  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	sff driver: added better handling of different forwarding modules;
+	added tag-specific counters;  fixed shutdown procedure; fixed
+	statistics and statistics-only operations.
+
+2013-07-09  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	fixed broken gt1 test.
+
+2013-07-09  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	fixed bug (typo) in static-counter code.
+
+2013-07-09  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	fixed deallocation mismatch.
+
+2013-07-09  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	simple_tag_types: added missing deallocation (destructor) for tagset
+	list.
+
+2013-07-09  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	a_index: fixed missing initialization in clear().
+
+2013-07-09  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Added basic TTable (tags).
+
+	Added basic tests for tag-based tables.
+
+2013-07-09  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Fixed two integration tests "complete" and "misc", adapted to new sff
+	syntax (mandatory semicolon to close ifconfig statements).
+
+2013-07-09  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Better use of k_hash_setter, creating once and then resetting for each
+	encoded attribute or tag.
+
+2013-07-09  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Added tags data model and tagsets-based forwarding table.  Added
+	concrete "simple" tagsets types and corresponding support in sff
+	driver.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	merged refactoring in siena namespace (renamed all components).
+	merged BDD fixes.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Fixed and refactored BDD-based and ZDD-based tables.  zdd_table still
+	fails due to what looks like the same old problem in the CUDD library.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	renamed (previously missed) iterator => Iterator for String.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Renamed defs in siena namespace: int_t => Int, string_t => String,
+	etc; string_id => STRING, int_id => INT, etc; message => Message,
+	eq_id => EQ, ss_id => SS, etc.  Adapted scanner and parser that failed
+	due to conflicts between token names.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	renamed components in b*_table implementations.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	renamed Interface to fwd_interface.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	renamed Constraint to fwd_constraint.
+	renamed Attribute to fwd_attribute.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	renamed CProcessor to c_processor.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	renamed flist to f_list
+	.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	renamed Filter to fwd_filter.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Changes in StringIndex: StringIndex renamed to string_index;
+	modularized internal components of string_index; code clean-up; better
+	handling of pointers to descriptors in inside and leaf nodes.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	merged namespace siena_impl changes.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	introduced separate namespace for implementation (siena_impl).
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	added (forgotten) method implementation in hash_accumulator.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	renamed generic hash of binary representation of values (as bianry
+	strings) for clarity.
+
+2013-07-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Renamed attribute index ATable to a_index.  Added attribute index
+	implementation based on PATRICIA trie, which is less dependent on the
+	insertion order than the corresponding TST implementation, it is
+	anyway slightly faster than the TST even with random insertion order,
+	and it is also slightly more compact.
+
+2013-07-07  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Renamed FTAllocator to batch_allocator.  All internal components will
+	follow a c_style_naming_style while external components or interfaces
+	will follow the CamelCaseStyle.
+
+2013-07-07  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Created generic FIB interface and prepared for multi-modal forwarding
+	tables.  Removed MatchMessageHandler, which adds complication to the
+	generic interface and that can be easily implemented with a
+	MatchHandler wrapper.
+
+	Completely modularized (i.e., hidden) all forwarding table
+	implementations.  This means that all the internal components of a
+	forwarding table, including allocator, attributes index, etc., are now
+	hidden within the implementation.
+
+	Fixed/removed duplicate data structures within the basic Bloom-filter
+	table (b_table).
+
+2013-07-05  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	created "attributes" data model: moved relevant data model definitions
+	from siena/types.h (now removed) into siena/attributes.h, and also
+	from exceptions.h and exceptions.cc (also removed).
+
+2013-07-05  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	cleanup of hash features: class PHash => hash_accumulator; modularized
+	and merged hash implementations; removed unused phash template
+	function.
+
+2013-06-30  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	updated changelog.
+
+2013-06-30  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	updated changelog.
+
+2013-06-29  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Version 1.13.0: This version features a new reimplementation of
+	the timing features.  Now we have different types of timers,
+	implemented using various OS clocks through clock_gettime or Intel's
+	CPU cycle counter through the rdtsc instruction.  These timers are
+	selectable at configure time.  This version also includes improved
+	documentation, mostly for style.
+
+2013-06-29  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Merged reimplementation of timing feature
+
+2013-06-29  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Timing feature reimplemented once again and almost completely.  Now we
+	have different types of timers selectable at configure time. The sff
+	timers and timer stack are also a bit cleaner.
+
+2013-06-26  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* .bzrignore: not ignoring COPYING file.
+
+2013-06-26  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* COPYING: now license is in COPYING file.
+
+2013-06-26  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* doc/doxygen.conf, doc/Makefile.am, configure.ac: now using DOT,
+	whenever available, to generate class diagrams.
+
+2013-06-26  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* antodoc.css, doxygen.conf: updated and improved doc presentation style a bit.
+	* footer.html: updated copyright notice.
+
+2013-06-26  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Makefile.am: added btrietable to doxygen sources.
+
+2013-06-24  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Version 1.12.0: This version introduces the BTrieTable algorithm.  A
+	BTrieTable is at a high level similar to a BTable in that it
+	associates each interface with a set of Bloom-filter-encoded filters
+	(that is, an encoded predicate).  Therefore, the ifconfig and match
+	algorithms operate on each interface separately.
+
+	In essence BTrieTable represents a predicate as a trie and uses a
+	subset test as its main processing algorithm.  This subset test is
+	implemented in the suffix_contains_subset function.  This test takes a
+	set S of the positions of the 1-bits in a Bloom filter representing an
+	encoded filter or an encoded message, and a binary trie T representing
+	a set of filters, and checks whether one of the filters in T is a
+	subset of S.  This algorithm is used in building the trie representing
+	a predicate in order to avoid inserting redundant filters (i.e.,
+	filters that cover another filter already in the trie).  The same
+	algorithm is also used in the matching algorithm, since that is
+	essentially a subset search.
+
+2013-06-24  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Added BTrieTable algorithm.  See source documentation.
+
+2013-06-11  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	added BTrieTable algorithm.  See source documentation.
+
+2013-06-24  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	added test for timers feature.
+
+2013-06-24  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	added nounput option to avoid annoying compile-time warning.
+
+2013-06-14  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* ChangeLog: updated
+
+2013-06-14  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Version 1.11.0: this version contains an important fix for the
+	high-precision, low-overhead timers.  Such timers are not at all used
+	for the functionality of the forwarding tables, and even for the
+	experimental features (timers) the code was simply never selected.
+	This time the code for the high-precision timers is correctly
+	selected.
+
+2013-06-14  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	updated to latest doxygen.
+
+2013-06-14  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	fixed timers: code was simply wrong and never tested.
+
+2012-09-16  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* v_index.h: added basic technical documentation for add and add_r.
+
+2012-09-16  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* .bzrignore: ignoring some automatically added m4 macro libs.
+
+2012-09-16  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* ChangeLog: updated
+
+2012-09-16  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Version 1.10.1: this version includes a fix in the matching of
+	double values interpreted as integers.  It also includes cosmetic
+	code edits and small improvements in the testing machinery (build
+	process).
+
+	* configure.ac: now using silent build (i.e., much less verbose);
+	version 1.10.1
+
+	* fwd_table.cc: (FwdTable::match) now interprets a double as an int
+	only when its value is effectively that of an int, meaning that it
+	compares equal to its implicit conversion to an int
+
+2012-07-24  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* counters_map.h: (counters_map) minor edits in general comments.
+
+2012-07-20  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* .bzrignore: ignoring GNU GLOBAL files
+
+2012-07-20  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* atable.cc, b_predicate.h, b_table.cc, b_table.h, bc_table.cc,
+	bdd_util.h, bddbtable.cc, bitcounter.cc, bitcounter.h, bitvector.cc,
+	bitvector.h, bloom_set.h, bool_index.cc, bool_index.h, bset.h,
+	bset_encoding.h, bv_table.cc, bx_table.cc, bx_table.h,
+	constraint_index.h, counters_map.cc, counters_map.h, exceptions.cc,
+	ft_allocator.cc, fwd_table.cc, fwd_table.h, hash.cc, hash.h,
+	mmhwrapper.h, ptst.cc, ptst.h, range_set.h, simple_fwd_types.h,
+	simple_fwd_types.icc, statistics.cc, statistics.h, string_index.cc,
+	string_index.h, string_index.icc, timing.cc, timing.h, types.cc,
+	v_index.h, yysff.h, yysfftypes.h, zddbtable.cc, doc/Makefile.am,
+	doc/maindoc.h, siena/allocator.h, siena/atable.h, siena/bctable.h,
+	siena/bddbtable.h, siena/btable.h, siena/bvtable.h, siena/bxtable.h,
+	siena/exceptions.h, siena/forwarding.h, siena/fwdtable.h,
+	siena/types.h, tests/Makefile.am, tests/any.sh,
+	tests/bloom_encoding.sh, tests/complete.sh, tests/config.sh,
+	tests/eq.sh, tests/gt.sh, tests/lt.sh, tests/misc.sh, tests/names.sh,
+	tests/ne.sh, tests/selectivity.sh, tests/sff.sh, tests/strings.sh,
+	tests/test_allocator.cc, tests/test_bitvector.cc: cleanup of repeated
+	empty comment lines.
+
+2012-07-20  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* acinclude.m4: boost autoconf macros taken out of acinclude.m4
+
+	* m4/ax_boost_base.m4, m4/ax_boost_unit_test_framework.m4: added boost
+	autoconf macros included as separate files in macro dir m4
+
+	* tests/Makefile.am: fixed bad rules that included all test programs,
+	including binary programs, in the distribution.  Now using separate
+	TESTSCRIPTS to indicate scripts that are then included in the source
+	distribution.
+
+2012-07-18  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	merged testing-framework changes.
+
+2012-07-18  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	testing: separated unit and integration tests; rewritten unit tests to
+	use the Boost Unit Testing Framework (UTF); added support for UTF in
+	the build process; some cleanup in the build process (Makefile.am).
+
+2012-07-17  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+ 	* Version 1.10.0: this version includes an improvement in the
+ 	implementation of the main matching algorithm, particularly in the
+ 	implementation of the counters.  The exception specifications have
+ 	also been much simplified (removed, really), which also changed
+ 	the interface of the library (and hence the version increment).
+ 	This version also includes minor code updates and cleanups.
+
+	* configure.ac: new version 1.10.0
+
+2012-07-17  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	merged changes from bad-alloc-exception branch
+
+	added LICENSE that somehow got lost in the bad-alloc-exception branch
+
+2012-07-17  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	Exception specifications: removed all but the absolutely necessary
+	"throw" specifications.  Many were not correct in the previous
+	versions, as methods that could throw std::bad_alloc were declared as
+	throwing nothing, which would then cause a call to unexpected(), which
+	would calls abort() by default.  It is unclear whether throw
+	specifications are really meaningful and useful, so for now I deided
+	to simply get rid of them.  (Remember that in C++ an empty
+	specification means that a function may throw *anything*.)
+
+	License and Credits: updated to GNU GPL v. 3; added Paolo Bonzini to
+	authors list (belated).
+
+	Code cleanup: removed unused RCS tags; removed RPM build specs and
+	code that I have not been maintaining for quite some time.
+
+2012-07-17  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	merged hash-table-counter-map branch
+
+2012-07-17  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	counters_map: integrated new counters map; changed counting algorithms
+	fwd_table and bc_table to use new counter map with a slightly
+	different interface; removed patricia trie implementation.
+
+	tests: added thorough functionality and performance tests for counters
+	map; removed all patricia trie tests.
+
+2012-07-17  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	(acinclude.m4) now properly quoting AC_LANG_SOURCE
+
+2012-07-17  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	added counters_map.h: fast hash map to implement the filter counters.
+
+2011-09-08  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* Version 1.9.5: this version includes an improvement in the
+	implementation of the attribute table in the forwarding table,
+	which is now a bit more modularized and also includes a balancing
+	algorithm to avoid the inefficiency of particular insertion orders
+	that might result in a heavily unbalanced TST.
+
+	* configure.ac: version 1.9.5.
+
+	* atable.cc: updated copyright statement.
+
+2011-09-08  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* Makefile.am, atable.cc, fwd_table.cc, siena/atable.h, siena/forwarding.h, siena/fwdtable.h, siena/stst.h, stst.cc:
+	(fwd_table) changed implementation of the attribute table from an
+	explicit TST to a more modularized, implementation-independent map.
+	The attribute table is still implemented as a TST, but the
+	implementation is completely hidden from the code of the forwarding
+	table.
+
+	(ATable) replaces the STST.  This implementation is still an extension
+	of the original STST that includes a balancing algorithm, specifically
+	for each per-character BST, which is called when the forwarding table
+	is consolidated.
+
+	* tst.h, tst.icc, tst.cc: *** empty log message ***
+
+2010-07-15  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* ft_allocator.cc:
+	(ALIGNMENT) small tweak to the expression that assigns the main
+	alignment step at compile-time, now using completely anonymous struct
+	and union so as to avoid namespace pollution.
+
+2010-03-11  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* Version 1.9.4: this version introduces the following significant
+	changes and features:
+
+	1. The syntax of the SFF driver was augmented to accept
+	keywords (e.g., "select", "ifconfig", and "integer") as well as
+	generic strings as attribute or constraint names.
+
+	2. The Bloom filter algorithm now use a configurable, and by
+	default more appropriate number of hash functions.  The default is
+	to use a width of M=256-bit and k=10 hash functions.  These
+	parameters can be changed at configure time.
+
+	3. SFF now offers a command-line option (-c) to count the matching
+	predicates instead of printing them all.
+
+	* configure.ac, constraint_index.h, doc/Makefile.am, doc/footer.html, doc/header.html.in, doc/maindoc.h, exceptions.cc, ft_allocator.cc, fwd_table.cc, fwd_table.h, hash.cc, hash.h, mmhwrapper.h, patricia.h, ptst.cc, ptst.h, range_set.h, sff.cc, sff.spec, sff_parser.yy, sff_scanner.ll, siena/allocator.h, siena/bctable.h, siena/bddbtable.h, siena/btable.h, siena/bvtable.h, siena/bxtable.h, siena/exceptions.h, siena/forwarding.h, siena/fwdtable.h, siena/stst.h, siena/types.h, simple_fwd_types.h, simple_fwd_types.icc, statistics.cc, statistics.h, string_index.cc, string_index.h, string_index.icc, stst.cc, tests/Makefile.am, tests/alloca.cc, tests/allocator.sh, tests/any.sh, tests/bitvector.sh, tests/bitvector1.sh, tests/bloom_encoding.sh, tests/bv.cc, tests/complete.sh, tests/config.sh, tests/eq.sh, tests/gt.sh, tests/lt.sh, tests/misc.sh, tests/names.sh, tests/ne.sh, tests/pat.cc, tests/patricia.sh, tests/selectivity.sh, tests/sff.sh, tests/strings.sh, timing.cc, timing.h, tst.cc, tst.h, tst.icc, types.cc, v_index.h, yysff.h, yysfftypes.h, zddbtable.cc, AUTHORS, ChangeLog, Makefile.am, README, acinclude.m4, b_predicate.h, b_table.cc, b_table.h, bc_table.cc, bdd_util.h, bddbtable.cc, bitcounter.cc, bitcounter.h, bitvector.cc, bitvector.h, bitvector.icc, bloom_set.h, bool_index.cc, bool_index.h, bool_index.icc, bset.h, bset_encoding.h, bv_table.cc, bx_table.cc, bx_table.h:
+	updated web and e-mail addresses to usi.ch domain.
+
+	* .cvsignore, doc/.cvsignore, tests/.cvsignore: added cvsignore files.
+
+	* bc_table.h: *** empty log message ***
+
+	* configure.ac:
+	added configuration parameter for the number of hash functions used by
+	the Bloom-filter algorithms.  Added m4 macro dir.
+
+	* INSTALL: automatic update.
+
+	* sff.cc, sff_parser.yy, sff_scanner.ll, yysff.h:
+	added matching interface counting to SFF: the "-c" command-line option
+	tells sff not to print each individual matching interface, but instead
+	to print, for each message the number of interfaces (predicates)
+	matched by the message.  The implementation is a bit more generic and
+	allows for a "verbosity" level, which so far can be "silent" (no
+	output), predicate count (number of matching predicates--new featre),
+	and full (prints a list of the interfaces matching each message).
+
+	* range_set.h: included cstdlib needed for strtol.
+
+	* tests/Makefile.am, tests/sff1.inp, tests/sff2.inp:
+	fixed use of the SFF executable passed from env for the sff*.inp
+	tests.
+
+	* tests/Makefile.am, tests/sff.sh, tests/sff1.good, tests/sff1.inp, tests/sff2.good, tests/sff2.inp:
+	added two tests for the command-line options of SFF
+
+2010-03-10  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* hash.h:
+	polynomial-mod-P now takes the base of the polynomial as a constructor
+	parameter, as opposed to a template parameter.
+
+	* bset_encoding.h:
+	changed encoding functions to use a variable, statically configurable
+	number of hash functions.
+
+	* bc_table.cc:
+	changed BCTable implementation to use the Bloom-filter encoding
+	functions common to the other "B" tables.
+
+	* Makefile.am:
+	removed unused source file bc_table.h; added ACLOCAL_AMFLAGS.
+
+	* tests/strings6.inp, tests/any1.inp, tests/any2.inp, tests/any3.inp, tests/any4.inp, tests/complete.inp, tests/eq1.inp, tests/eq2.inp, tests/eq3.inp, tests/eq4.inp, tests/eq5.inp, tests/gt1.inp, tests/gt2.inp, tests/gt3.inp, tests/gt4.inp, tests/lt1.inp, tests/lt2.inp, tests/lt3.inp, tests/lt4.inp, tests/misc.inp, tests/names.inp, tests/ne1.inp, tests/ne2.inp, tests/selectivity1.inp, tests/selectivity2.inp, tests/strings1.inp, tests/strings2.inp, tests/strings3.inp, tests/strings4.inp, tests/strings5.inp:
+	changed to comply with new driver-input syntax in which messages
+	(select statements) have to be closed by a semicolon.
+
+	* yysfftypes.h:
+	we now typedef YYSTYPE instead of #defining it, since it's better in
+	general and bison can now take that without much trouble.
+
+	* sff_scanner.ll:
+	modified to generate interactive scanner.  This is necessary to
+	use the sff driver as an interactive system.
+
+	* sff_parser.yy:
+	changed driver-input syntax to allow for quoted attribute names (i.e.,
+	attribute or constraint names expressed as strings) as well as
+	keywords (e.g., select) interpreted as attribute names depending on
+	the context.
+
+	* doc/driver.input:
+	fixed incorrect "pre_process" directive; added semicolumns at the end
+	of all statements to comply to the new syntax; added documentation of
+	all directives.
+
+2008-10-28  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* siena/forwarding.h, siena/fwdtable.h:
+	(FwdTable::ifconfig) now we throw a std::bad_alloc incase we run out
+	of memory.
+
+2008-06-09  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* b_table.cc, bitvector.cc, bool_index.cc, bool_index.h, fwd_table.cc, fwd_table.h, ptst.cc, ptst.h, range_set.h, sff.cc, siena/allocator.h, siena/stst.h, string_index.cc, string_index.h, stst.cc, timing.cc, tst.cc:
+	using 0 instead of NULL
+
+	* ft_allocator.cc, siena/allocator.h:
+	(FTAllocator) now throws std::bad_alloc when malloc() fails.
+
+	* ft_allocator.cc: added a pointer to alignment-tester struct.
+
+2008-05-30  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* ft_allocator.cc:
+	(round_up_to_alignment) changed to be portable.  These things are
+	probably optimized by the compiler anyway, or they are irrelevant, or
+	both.
+
+	(allocate) added check for malloc failure when allocating large
+	blocks.
+
+2008-03-28  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* ChangeLog: *** empty log message ***
+
+2008-03-27  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* configure.ac:
+	Version 1.9.3: added output redirection for driver program.
+
+	* sff.cc, sff_parser.yy, sff_scanner.ll, yysff.h, doc/maindoc.h:
+	added -O <filename> option to the SFF driver.  This option redirects
+	the driver's output to a given file.  An equivalent directive
+	(%output_to) has also been added to the driver input.
+
+2008-03-27  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* Version 1.9.3: added output redirection for driver program.
+
+	* sff.cc, sff_parser.yy, sff_scanner.ll, yysff.h, doc/maindoc.h:
+	added -O <filename> option to the SFF driver.  This option redirects
+	the driver's output to a given file.  An equivalent directive
+	(%output_to) has also been added to the driver input.
+
+2008-02-25  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* Version 1.9.2: this is a bug-fix release.  Some memory leaks
+	have been fixed in the SFF driver, but also in the main
+	implementation of the forwarding table.
+
+	* INSTALL: updated autotools
+
+	* fwd_table.cc:
+	(FwdTable::~FwdTable) added a call to consolidate().  This is
+		necessary to deallocate the temporary data structures
+		allocated in the incremental construction of the table.
+
+	* sff_parser.yy:
+	(yyparse) fixed the logic of a few delete() which should not be
+		executed when stats_only is true.
+
+	* v_index.h:
+	(v_index::add) revert to standard allocator for v_link.  Previous
+		patch was wrong. v_links must be deallocated by the
+		consolidate method.
+
+2008-02-24  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* configure.ac: version 1.9.2
+
+	* v_index.h:
+	(v_index::add) new v_link are now allocated with ftmem allocator.
+		This fixes a memory leak in the forwarding table.
+
+	* simple_fwd_types.h, simple_fwd_types.icc:
+	(simple_*) added appropriate destructors for filters, messages, and
+		predicates.
+
+	* sff_parser.yy:
+	(yyparse) changed allocation scheme for predicates and messages; now
+		using standard allocator (new) and therefore also using
+	        delete() to properly deallocate predicates and messages.
+
+	(new_sx_string) pulled deallocation of strings allocated in scanner of
+	        new_sx_string, and explicitly into yyparse.
+
+	(sff_parser_shutdown) added clear() for parser scratch allocator (Mem)
+
+2008-02-17  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* sff_scanner.ll, sff_parser.yy: (yyerror) now takes a const char *
+
+2008-01-06  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* AUTHORS, Makefile.am, README, acinclude.m4, b_predicate.h, b_table.cc, b_table.h, bc_table.cc, bc_table.h, bdd_util.h, bddbtable.cc, bitcounter.cc, bitcounter.h, bitvector.cc, bitvector.h, bitvector.icc, bloom_set.h, bool_index.cc, bool_index.h, bool_index.icc, bset.h, bset_encoding.h, bv_table.cc, bx_table.cc, bx_table.h, configure.ac, constraint_index.h, doc/Makefile.am, doc/driver.input, doc/footer.html, doc/header.html.in, doc/maindoc.h, exceptions.cc, ft_allocator.cc, fwd_table.cc, fwd_table.h, hash.cc, hash.h, mmhwrapper.h, patricia.h, ptst.cc, ptst.h, range_set.h, sff.cc, sff.spec, sff_parser.yy, sff_scanner.ll, siena/allocator.h, siena/bctable.h, siena/bddbtable.h, siena/btable.h, siena/bvtable.h, siena/bxtable.h, siena/exceptions.h, siena/forwarding.h, siena/fwdtable.h, siena/stst.h, siena/types.h, simple_fwd_types.h, simple_fwd_types.icc, statistics.cc, statistics.h, string_index.cc, string_index.h, string_index.icc, stst.cc, tests/Makefile.am, tests/alloca.cc, tests/allocator.sh, tests/any.sh, tests/bitvector.sh, tests/bitvector1.sh, tests/bloom_encoding.sh, tests/bv.cc, tests/complete.sh, tests/config.sh, tests/eq.sh, tests/gt.sh, tests/lt.sh, tests/misc.sh, tests/names.sh, tests/ne.sh, tests/pat.cc, tests/patricia.sh, tests/selectivity.sh, tests/strings.sh, timing.cc, timing.h, tst.cc, tst.h, tst.icc, types.cc, v_index.h, yysff.h, yysfftypes.h, zddbtable.cc:
+	update authors addresses and other web links.
+
+2008-01-05  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* INSTALL: updated autotools
+
+2007-11-08  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* sff_parser.yy:
+	(sff_parser_print_statistics) changed default output format to match
+	format descriptors.
+
+2006-07-13  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* Version 1.9.1: the major feature of this release is a new
+	algorithm derived from the BTable algorithm.  This new algorithm
+	is based on the simple idea of sorting the entries in a BTable
+	according to their Hamming weight.  Another new/improved feature
+	of this release is the new timing facility.  These fine-grained
+	timing statistics can now be activated through the
+	--enable-statistics configure-time option.  Other changes include
+	some bugfixes in the statistics output, in the encoding of some
+	constraints in the Boolm-filter algorithms, and in the BXTable
+	algorithm.  Some minimal documentation of the matching algorithms
+	was also added.
+	
+	* configure.ac:
+	version 1.9.1; removed bad message in --with-bdd-dir macro.
+
+	* siena/bddbtable.h: added documentation for the BDD-based algorithm.
+
+	* siena/fwdtable.h: added documentation for FwdTable algorithm.
+
+	* doc/maindoc.h, doc/footer.html: added recent copyright info.
+
+	* sff.spec: now using %configure rpm macro with %configure_options.
+
+	* Makefile.am:
+	added proper definition of RPM_CONFIG.  We use this macro to pass the
+	proper configuration options to the configure script inside rpmbuild.
+
+2006-05-04  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* sff_parser.yy: added output operators for constraints and predicates.
+
+2006-01-08  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* sff.cc: (main) removed redundant code, testing for "-p" option twice.
+
+	* bset.h:
+	now using CHAR_BITS from <climits> to define bits/byte settings
+
+	* b_table.cc:
+	(consolidate) added performance statistics management using
+	consolidate_timer
+
+	* sff_parser.yy:
+	(sff_print_statistics) fixed bug in default format: C= is now
+	correctly reporting the number of constraints instead of the number of
+	filters.
+
+2006-01-03  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* Makefile.am: *** empty log message ***
+
+	* sff_parser.yy:
+	removed access to consolidate_timer here.  Should be in fwd table
+	implementations.
+
+	* timing.cc, timing.h: *** empty log message ***
+
+	* sff_parser.yy: fixed use of consolidate_timer
+
+	* b_table.cc:
+	using insertion sort instead of bubble sort in sort_filters
+
+2005-12-08  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* bitvector.h, patricia.h, tests/bloom_encoding.sh, b_table.cc, bv_table.cc, doc/maindoc.h, sff.cc, sff_parser.yy, siena/btable.h, yysff.h:
+	added SortedBTable matching algorithm.
+
+2005-10-08  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* Makefile.am, b_predicate.cc, b_predicate.h, b_table.cc, b_table.h, bset.h, bv_table.cc, bx_table.cc, bxset.h:
+	(bset) improved to provide access to 8-bit blocks, through
+	bset::bv8(pos). bset can now be used for all Bloom filter
+	representations.
+
+	(encode_predicate) predicate encoding is now implemented as a template
+	function.  This unifies and simplifies the encoding procedure for all
+	tables that use Bloom-encoding.
+
+	(BXTable, BVTable) adapted to use bset instead of bxset, and new
+	encode_predicate template.
+
+	(BTable) adapted to use new encode_predicate template.
+
+	(bxset) obsolete.  replaced by bset.
+
+2005-10-07  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* sff.cc, sff_parser.yy:
+	fixed handling of matching timer. Fixed help message accordingly.
+
+	* bv_table.cc: minor code refactoring.
+
+2005-10-04  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* b_table.cc:
+	(match) fixed exit condition from matching loop, when handler.output()
+	returns true.
+
+	* bitvector.icc: (bitvector::operator &=) small speed-up.
+
+	* acinclude.m4, timing.cc:
+	fixed conflict between timer features and profiling.
+
+2005-10-02  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* sff.cc:
+	(main) return error code and output error message when selecting an
+	unknown algorithm with -f option.
+	(main) added "--" option to break out of option parser loop.
+
+	* tests/bloom_encoding.sh:
+	process bug fix: skips algorithms that are not available (because they
+	have been excluded at configure-time).
+	process bug fix: cleanup after successful algo iteration.
+
+	* Makefile.am: added siena/bvtable.h.
+
+	* bc_table.cc:
+	(encode_p_exists) fixed encoding of integer constraints, now in sync
+	with bset_encoding functions.
+
+	* tests/Makefile.am: added bloom-encoded matching test.
+
+	* tests/bloom_encoding.sh: *** empty log message ***
+
+	* timing.cc: cleanup after previous merge.
+
+	* b_table.cc, bddbtable.cc: fixed leftover timer refs.
+
+2005-10-01  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* bx_table.cc:
+	(ifconfig) fixed bug: now using right allocator for BXPredicates
+
+	* Makefile.am: added bv_table and b_predicate sources.
+
+2005-09-30  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* configure.ac: Added --enable-statistics option.
+
+	* bx_table.cc:
+	Adapted to statistics library/variables from statistics.h.
+	Incorporated class declarations from bx_table.h.
+
+	* bxset.h: Added debugging method.
+
+	* bitvector.h, bitvector.icc:
+	Added &= operator for bitvector.  Added constructor with
+	constant-value initialization.
+
+	* yysff.h:
+	Added support for new "BV" algorithm (Bloom-encoded matching using
+	vertical bitvectors)
+
+	* siena/types.h:
+	Removed byte counter for string matcher, moved to statistics.h module.
+
+	* bc_table.cc, bddbtable.cc, fwd_table.cc, sff.cc, sff_parser.yy, string_index.cc, zddbtable.cc:
+	Adapted to statistics library/variables from statistics.h.
+
+	* b_table.cc:
+	Factored out management of Bloom-encoded predicates, now using
+	b_predicate.h.  Now using statistics.h.
+
+	* b_predicate.cc, b_predicate.h, statistics.cc, statistics.h, bv_table.cc, siena/bvtable.h:
+	*** empty log message ***
+
+	* timing.cc, timing.h:
+	substantial reorganization of the timing facilities.  Three goals:
+	fixing a serious bug in the stack implementation; creating a separate
+	timer library, separating the timers themselves; refactoring.  Timers
+	are now simply timers.  Therefore, the timer stack is now implemented
+	as a separate and simpler class.  Timers are no longer identified by
+	name.  Access by name can (and should) be easily implemented outside
+	this library.  Timers have also been implemented in such a way that
+	multiple timers can be active at the same time.
+
+2005-09-20  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* INSTALL, acinclude.m4, b_table.cc, bddbtable.cc, bench/BloomVsSFF.rb, bench/SFFBenchCommandList.rb, bench/SFFBenchGraph.rb, bench/SFFBenchWLServer.rb, bench/util/calc_false_pos.rb, bench/util/sub_encode_time.rb, bench/workload_server.rb, bx_table.cc, configure.ac, sff_parser.yy, timing.cc, timing.h, zddbtable.cc:
+	Added code for the G5 RTC to timing and autodetection to configure.ac.  Modified the BDD-style algorithms to use tighter timer of forwarding and added an encoding timer.  Massive update to bench scripts - they still need to be renamed and better organized.
+
+2005-09-17  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* bench/BloomVsSFF.rb, bench/Command.rb, bench/SFFBenchCommandList.rb, bench/SFFBenchGraph.rb, bench/SFFBenchWLProcessor.rb, bench/SFFBenchWLServer.rb, bench/util/gen_work.rb, bench/workload_server.rb:
+	Distributed framework for benchmarking on a cluster (SFFBench*.rb)
+	Graphing script (SFFBenchGraph.rb)
+
+2005-09-16  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* bench/BloomVsSFF.rb, bench/work-bits/timer_start.in, fwd_table.cc:
+	Added timer push/pop to appropriate method (ifconfig) for "consolidate" timer.  This means timing now works for d type tables.
+
+	* bench/BloomVsSFF.rb, sff_parser.yy, timing.cc:
+	Fix for a gcc 3.3.x misunderstanding in timer.cc:
+
+	__asm__ volatile ("" : : : );   =>  __asm__ volatile ("" : : : "memory" );
+
+	Also added output of forwarding and interface build timers to defualt output.
+
+	* bitvector.h, bx_table.cc:
+	moved FABitvector from bx_table.cc to bitvector.h for future use.
+
+2005-09-15  Antonio Carzaniga <firstname.lastname@usi.ch>
+
+	* bench/BloomVsSFF.rb, bench/dist/attr_names.dist, bench/dist/constr_names.dist, bench/util/gen_work.rb:
+	Update to benchmark quite
+
+	* fwd_table.cc, timing.cc, timing.h:
+	add memory barriers to the timing code
+
+	* timing.cc, timing.h: really add timing.*
+
+	* string_index.cc: implement termination optimization
+
+	* ChangeLog, Makefile.am, b_table.cc, bc_table.cc, bddbtable.cc, bx_table.cc, fwd_table.cc, sff.cc, sff_parser.yy, string_index.cc, string_index.h, yysff.h, zddbtable.cc:
+	commit timing facility
+
+	* sff.cc: document timing facility
+
+	* timing.cc, timing.h: New file.
+
+	* ChangeLog, Makefile.am, b_table.cc, bc_table.cc, bddbtable.cc, bx_table.cc, fwd_table.cc, sff_parser.yy, string_index.cc, timing.cc, timing.h, yysff.h, zddbtable.cc:
+	commit timing facilities
+
+	* bddbtable.cc, bench/BloomVsSFF.rb, bench/dist/attr_names.dist, bench/dist/bool_operators.dist, bench/dist/bool_values.dist, bench/dist/constr_names.dist, bench/dist/double_operators.dist, bench/dist/double_values.dist, bench/dist/int_operators.dist, bench/dist/int_values.dist, bench/dist/string_operators.dist, bench/dist/string_values.dist, bench/dist/types.dist, bench/util/dist_gen.rb, bitvector.h, bitvector.icc, bx_table.cc, sff.cc, sff_parser.yy, siena/bddbtable.h, yysff.h, zddbtable.cc:
+	Merge from regex-mergepoint-20050912 to regex-mergepoint-20050915
+
+2005-09-15  Paolo Bonzini  <bonzini@gnu.org>
+
+	* timing.cc, timing.h: New.
+	* sff_parser.yy: Use timing.cc.  Remove old timer interfaces.
+	* string_index.cc, *table*.cc: Use timing.cc.
+	* yysff.h: Use timing.cc.
+
+2005-09-12  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sff.cc: Really implement -p.  Add %b specifier for -o.
+	* sff-parser.yy (sff_parser_print_statistics): Implement %b
+	and print it with the default statistics format as well.
+	* string_index.cc (StringIndex::match): Update processed_bytes.
+	(processed_bytes): New.
+	* siena/types.h (processed_bytes): New.
+
+2005-09-05  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Version 1.9.0: the major feature of this release is a complete
+	redesign of the BDD-based Bloom-encoded forwarding tables.  These
+	new implementations are available through the BDDBtable and
+	ZDDBTable classes, which represent the Bloom-encoded predicates
+	with a binary-decision diagram (BDD) and a zero-suppressed BDD,
+	respectively.  These implementations use the CUDD BDD package
+	(available at http://vlsi.colorado.edu/~fabio/CUDD/) for the
+	construction of the BDD/ZDD, and can be activated at configure
+	time with the --enable-bdd option.  Once constructed, BDDs and
+	ZDDs are compiled in a compact internal representation used for
+	matching.  This representation is completely independent from the
+	CUDD representation and the CUDD build/reordering process.  In
+	fact, the code is such that a completely different BDD library
+	could be easily plugged in, in addition to, or as a replacement of
+	the CUDD library.  This release also includes a couple of bugfixes
+	and cleanups (more details below).  Some code from Paolo Bonzini's
+	regex matcher has also been merged into this release, although the
+	main regex features will be included and activated in a later
+	release.  The only visible changes in this release are in the
+	parser for the sff driver.  Other changes affect the main
+	forwarding table allocator.  Other minor changes include style
+	fixes to improve std C++ compliance and other minor improvements
+	of the configuration and build process.
+		
+	* Makefile.am:
+	added RPM_CONFIG variable to allow for confiurable package production.
+
+	* sff.spec: adapted to new libtool naming scheme.
+	added configure_options to allow for confiurable package production.
+
+	* configure.ac: Version 1.9.0.
+
+	* Makefile.am, b_table.cc, b_table.h, bset_encoding.h, bx_table.cc:
+	added copyright.
+
+	* doc/Makefile.am: added copyright.
+	added BDD table headers to doxygen input.
+
+2005-09-02  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* doc/maindoc.h:
+	added/updated references to alternate forwarding algorithms.
+
+	* siena/bddbtable.h, siena/btable.h: added/updated some documentation.
+	updated copyright info.
+
+	* AUTHORS, range_set.h, sff.cc: updated copyright info.
+
+	* bddbtable.cc, zddbtable.cc: Some code refactoring and cleanups.
+
+2005-09-01  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* sff_parser.yy, yysff.h: Added new ZDD-based forwarding table.
+
+	* sff.cc: Added handling of '-p' option that somehow got lost.
+	Added 'd' specifier (as "default") for -f option; this is for
+	uniformity in the selection of the matching algorithm.
+	Added 'Z' specifier (as "ZDD") for -f option; this selects the new
+	ZDD-based forwarding table.
+
+	* patricia.h: cosmetic C++ std compliance changes.
+
+	* bset_encoding.h:
+	changed encoding of numeric constraints to fix incompatibility between
+	integers and floats. Numeric constraints are now encoded with a unique
+	type tag.
+
+	* Makefile.am: added new BDD and ZDD source files.
+
+	* bdd_util.h, bddbtable.cc, siena/bddbtable.h, zddbtable.cc:
+	another significant redesign and improvement of the BDD-based
+	forwarding table.  The original implementation has been split into two
+	separate BDD-based, Bloom-encoded tables: BDDBTable (the old one) and
+	ZDDBTable.  BDDBTable represents sets of Bloom filters using a BDD,
+	while ZDDBTable represents sets of complemented Bloom filters using a
+	ZDD.  The two implementations are based on the same general idea,
+	although the representations and the corresponding matching algorithms
+	are slightly different. Both compile the BDD (ZDD) produced by the
+	CUDD library into an independent and more compact data structure used
+	for matching.  Minor changes are code cleanup and a new debugging
+	output that prints our BDDs as DOT graphs.
+
+2005-08-29  Paolo Bonzini  <bonzini@gnu.org>
+
+	* patricia.h, string_index.cc:
+	sync patricia.h with mainline, allocate everything into an FTAllocator
+	for string_index.cc
+
+	* patricia.h:
+	clarify patricia tree implementation; add a constructor taking a FTAllocator.
+
+2005-08-29  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* configure.ac:
+	added default value in documentation of --enable-bdd option.
+
+	* Makefile.am:
+	clean-up: minimal values for *FLAGS and INCLUDES variables.
+
+2005-08-27  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* sff.cc, sff_parser.yy:
+	added %S flag character in format string for statistics.  This
+	character prints the total allocated bytesize of the forwarding
+	table.
+
+	* ft_allocator.cc, siena/allocator.h: fixed bugs in bytesize() methods;
+	simplified size accounting methods and data members.
+
+	* b_table.cc, bddbtable.cc, bx_table.cc, fwd_table.cc, siena/bddbtable.h, siena/btable.h, siena/bxtable.h, siena/forwarding.h, siena/fwdtable.h:
+	changed bytesize() methods to return a size_t instead of unsigned int.
+
+	* INSTALL: *** empty log message ***
+
+	* siena/bddbtable.h, bddbtable.cc:
+	The BDDs and their matching functions have undergone another major
+	redesign.  Now the CUDD BDDs are built inside the ifconfig() function,
+	immediately compiled into a more compact and efficient data structure,
+	and immediately deallocated.  This has two main motivations/effects:
+	(1) it makes the BDD-based forwarding table essentially independent of
+	the BDD package in use, (2) it produces a BDD structure that is more
+	compact and efficient for matching, and (3) it fits the BDD data
+	structure fit entirely within the allocator of the forwarding table.
+
+2005-08-26  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* siena/bddbtable.h, bddbtable.cc:
+	the BDD-based forwarding table was completely reimplemented:
+	now every interface has its own CUDD manager;
+	the table setup process uses CUDD's dynamic and explicit variable
+	reordering algorithm;
+	the table setup process has been reimplemented using BDDs (as oposed
+	to ZDDs), hopefully in the correct way, i.e., generating the minimal
+	bdd, modulo reordering;
+	the matching algorithm has been reimplemented as a walk of the BDD.
+
+	* tests/Makefile.am: fixed LIBS and LDFLAGS handling for CUDD package.
+
+	* siena/forwarding.h: fixed broken link in doxygen documentation;
+	cosmetic std c++ compliance changes.
+
+	* siena/bctable.h: fixed wrong inclusion of config.h;
+	cosmetic std c++ compliance changes.
+
+	* configure.ac: fixed handling of CUDD package and "bdd" tables.
+
+	* Makefile.am: fixed LIBS and LDFLAGS handling for CUDD package.
+
+	* compare.sh:
+	added options to select CPU steps or user time for comparison.
+
+	* b_table.cc, b_table.h, bc_table.cc, bitcounter.cc, bitcounter.h, bitvector.cc, bitvector.h, bitvector.icc, bloom_set.h, bool_index.cc, bool_index.h, bset.h, bset_encoding.h, bx_table.cc, bx_table.h, bxset.h, exceptions.cc, ft_allocator.cc, fwd_table.cc, hash.cc, hash.h, mmhwrapper.h, patricia.h, range_set.h, sff_parser.yy, sff_scanner.ll, siena/btable.h, siena/bxtable.h, siena/exceptions.h, siena/fwdtable.h, siena/stst.h, siena/types.h, string_index.cc, string_index.h, stst.cc, types.cc:
+	cosmetic std c++ compliance changes.
+
+	* siena/allocator.h: resolved merge conflict;
+	cosmetic c++ std compliance changes;
+
+2005-08-25  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sff_parser.yy, sff_scanner.ll: add hunks missed in the mega merge
+
+	* sff_scanner.ll: apply a hunk i left out in the mega merge
+
+	* sff_parser.yy: apply a hunk i missed in the mega merge
+
+	* regex/bitset.h, regex/nfa.cc, regex/nfa.h, regex/node_set.cc, regex/node_set.h, regex/partitioning.cc, regex/partitioning.h, regex/regex_parser.cc, regex/regex_parser.h, tests/nfa.cc, tests/nfa.good, tests/nfa.inp, tests/nfa.sh, tests/regex.sh, tests/regex1.good, tests/regex1.inp:
+	New file.
+
+	* AUTHORS, Makefile.am, regex/bitset.h, regex/nfa.cc, regex/nfa.h, regex/node_set.cc, regex/node_set.h, regex/partitioning.cc, regex/partitioning.h, regex/regex_parser.cc, regex/regex_parser.h, siena/stst.h, string_index.cc, string_index.h, string_index.icc, stst.cc, tests/Makefile.am, tests/nfa.cc, tests/nfa.good, tests/nfa.inp, tests/nfa.sh, tests/regex.sh, tests/regex1.good, tests/regex1.inp, tests/strings.sh:
+	committed first version of regex-enabled matcher
+
+	* AUTHORS, Makefile.am, ft_allocator.cc, fwd_table.cc, sff.cc, sff_parser.yy, sff_scanner.ll, siena/allocator.h, siena/stst.h, siena/types.h, string_index.cc, string_index.h, tests/config.sh, types.cc:
+	Add a regex matching operator in the scanner.
+
+	Support suballocators and large block allocations in FTAllocator.
+
+2005-07-25  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* fwd_table.h: better standard compliance.
+
+	* v_index.h: added technical documentation.
+
+	* constraint_index.h: minor documentation changes.
+
+2005-05-18  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Makefile.am: added range_set.
+
+2005-05-02  Paolo Bonzini  <bonzini@gnu.org>
+
+	* yysff.h (sff_parser_set_ifconfig_ranges): Declare.
+
+	* sff_parser.yy (ifconfig_ranges, sff_parser_set_ifconfig_ranges): New.
+	(IfConfig): Do not configure a range that is not part of a range.
+	Update copyright statement.
+
+	* sff.cc: update copyright statement.
+
+	* range_set.h: changed copyright to University of Lugano
+
+	* sff.cc (print_usage): updated usage message.
+
+	* sff.cc (main): Accept -i.
+
+	* AUTHORS: added credits to Paolo Bonzini.
+
+	* range_set.h: baseline
+
+2005-04-01  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* tests/Makefile.am: added two tests for selectivity table.
+
+	* tests/selectivity.sh, tests/selectivity1.good,
+	tests/selectivity1.inp, tests/selectivity2.good,
+	tests/selectivity2.inp: New.
+
+	* fwd_table.cc:
+	(FwdTable::ifconfig) fixed bug in selectivity selectivity table
+	construction.
+
+2005-04-01  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Version 1.8.8: this version includes two new features and a bug
+	fix.  The first new feature, contributed by Paolo Bonzini
+	<bonzini@gnu.org>, consists of an improvement of the driver (sff)
+	that takes more than one input file on the command line.  The
+	second feature is a new, faster variant of the counting algorithm.
+	This variant, also suggested by discussions with Paolo Bonzini,
+	uses counters associated with the filters in the main index rather
+	than maintaining a set of running counters that are local to the
+	matching function.  The advantage of this new algorithm is that
+	the matching function does not need to maintain a local index of
+	counters.  The net gain in terms of time (CPU cycles) is around
+	10% on sizeable workloads, and it varies more on smaller
+	workloads. The disadvantage is that having static counters makes
+	the matching function non-reentrant, so the old (reentrant)
+	implementation is kept as the default, while the new one can be
+	selected at configure time with the --with-non-reentrant-counters
+	option.  This version also contains an important bug fix in the
+	construction of the selectivity table.
+	
+	* tests/Makefile.am: added two tests for selectivity table.
+
+	* tests/selectivity.sh, tests/selectivity1.good, tests/selectivity1.inp, tests/selectivity2.good, tests/selectivity2.inp:
+	*** empty log message ***
+
+	* fwd_table.cc:
+	(FwdTable::ifconfig) fixed bug in selectivity selectivity table
+	construction.
+
+2005-03-31  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* fwd_table.cc, fwd_table.h:
+	(Filter and CProcessor) added implementation of static counters.  This
+	implementation is selected by the WITH_STATIC_COUNTER cpp symbol,
+	which is defined by the --with-non-reentrant-counters configure
+	option.
+
+	* sff.cc: updated usage message.
+
+	* configure.ac:
+	added --with-non-reentrant-counters option; updated version.
+
+	* sff.spec:
+	Copyright --> Licence to adapt to new rpmbuild nomenclature;
+	updated list of libraries.
+
+2005-03-30  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sff.cc (main): Support multiple file names on the command line.
+	* sff_scanner.ll (sff_scanner_open): Support fname == "-".
+	* sff_scanner.ll: Do not update yynlin.  Use yylineno instead.
+	* sff_parser.yy: Remove references to yynlin.  Use yylineno instead.
+	* yysfftypes.h: Likewise.
+
+2005-02-24  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* sff_scanner.ll:
+	sff_scanner.ll: Remove useless ':' rule, add catch-all '.' rule.
+	[Paolo Bonzini]
+
+	* sff_parser.yy:
+	Remove useless ':' rule, add catch-all '.' rule. [Paolo Bonzini]
+
+2005-02-14  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Version 1.8.7: this version includes two bugfixes. One is for a
+	bug in the string index structure that caused some missed matches
+	due to an erroneous construction of the crown list for the
+	greater-than/less-than operators.  The second one is for another
+	bug in the string index, which was ignoring prefixes corresponding
+	the whole string.  Thanks to Paolo Bonzini <bonzini@gnu.org> for
+	reporting these bugs and for helping in testing the fixes.  Minor
+	changes include yet another improvement of the build process for
+	the documentation, more documentation, especially for the
+	Bloom-filter implementations, new style for HTML documentation, an
+	additional feature for the allocator facility that allows
+	allocations of large blocks, and a new organization of the test
+	suite in input/expected-output files for each individual test
+	(thanks again to Paolo Bonzini for these last two patches).
+	
+	* tests/Makefile.am:
+	added all files that define test input and expected output to the
+	distribution.
+
+	* string_index.cc:
+	fixed bug/feature in match().  The first tree walk now includes all
+	kinds of operators.  The only operator that was previously masked was
+	the prefix operator, which caused the match function to miss prefix
+	matches in cases where the prefix was also the entire string.  Thanks
+	to Paolo Bonzini <bonzini@gnu.org> for reporting this bug.
+
+	* configure.ac: version 1.8.7.
+
+2005-02-11  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* INSTALL: *** empty log message ***
+
+2005-02-10  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* string_index.cc:
+	fixed bug in prev/backtrace that caused prev to miss some branches of
+	the TST that start from a final node.  This bug produced erroneous
+	constructions of the TST, which, in turn, caused incorrect matching
+	results (false negatives).
+
+	* hash.cc:
+	tweaks in hash functions that make them a bit simpler and a bit
+	faster.
+
+	* doc/antodoc.css, doc/footer.html, doc/header.html.in:
+	small changes in documentation style.
+
+	* tests/strings6.good, tests/strings6.inp:
+	added test case that exhibit prev/backtrack bug.
+
+2005-02-08  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* ft_allocator.cc, siena/allocator.h:
+	patch contributed by Paolo Bonzini <bonzini@gnu.org>:
+
+		* ft_allocator.cc (round_up_to_alignment): Use `&' trick.
+		(FTAllocator::allocate): Support allocating large blocks.  Fix
+		formatting.
+		(FTAllocator::recycle): Free them.
+		(FTAllocator::clear): Likewise.  Replace assignments with
+		assertions.
+		(FTAllocator::size, FTAllocator::allocated_size): Account for
+		large blocks.
+		* siena/allocator.h (FTAllocator): Add new members largeblist
+		and large_size
+		(FTAllocator::FTAllocator): Initialize all members.
+
+2005-01-24  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Makefile.am: changed sff.spec to more generic PACKAGE_NAME.spec
+
+	* sff.spec:
+	changed html documentation directory to avoid Automake's confusion
+	with "html" target.
+
+	* doc/Makefile.am:
+	workaround to avoid Automake's confusion with "html" target.
+
+2005-01-12  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* siena/types.h: added iterator feature for string_t.
+
+	* fwd_table.cc, string_index.cc, string_index.h:
+	added consolidate() stub for string index.
+
+	* tests/Makefile.am, tests/allocator.sh, tests/any.sh, tests/any1.good, tests/any1.inp, tests/any2.good, tests/any2.inp, tests/any3.good, tests/any3.inp, tests/any4.good, tests/any4.inp, tests/bitvector.good, tests/bitvector.inp, tests/bitvector.sh, tests/bitvector1.good, tests/bitvector1.inp, tests/bitvector1.sh, tests/complete.good, tests/complete.inp, tests/complete.sh, tests/config.sh, tests/eq.sh, tests/eq1.good, tests/eq1.inp, tests/eq2.good, tests/eq2.inp, tests/eq3.good, tests/eq3.inp, tests/eq4.good, tests/eq4.inp, tests/eq5.good, tests/eq5.inp, tests/gt.sh, tests/gt1.good, tests/gt1.inp, tests/gt2.good, tests/gt2.inp, tests/gt3.good, tests/gt3.inp, tests/gt4.good, tests/gt4.inp, tests/lt.sh, tests/lt1.good, tests/lt1.inp, tests/lt2.good, tests/lt2.inp, tests/lt3.good, tests/lt3.inp, tests/lt4.good, tests/lt4.inp, tests/misc.good, tests/misc.inp, tests/misc.sh, tests/names.good, tests/names.inp, tests/names.sh, tests/ne.sh, tests/ne1.good, tests/ne1.inp, tests/ne2.good, tests/ne2.inp, tests/patricia.good, tests/patricia.inp, tests/patricia.sh, tests/strings.sh, tests/strings1.good, tests/strings1.inp, tests/strings2.good, tests/strings2.inp, tests/strings3.good, tests/strings3.inp, tests/strings4.good, tests/strings4.inp, tests/strings5.good, tests/strings5.inp:
+	tests extracted from test driver *.sh and modularized into three
+	files.  For example, strings.sh acts as a driver for the one or more
+	tests for strings. strings1.inp is the input to an individual strings
+	test, and strings1.good is the expected output for that test.
+
+	* sff_parser.yy: changed instruction counter to unsinged.
+
+2005-01-07  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* doc/Makefile.am:
+	replaced HTML_OUTPUT macro (with HTMLDIR) which confuses Automake.
+
+2004-12-29  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* siena/forwarding.h: small doc fix.
+
+2004-12-22  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* doc/Makefile.am:
+	changed to use docdir set by configure; changed docs build process,
+	now using environment variables to parameterize doxygen.  Simplified
+	and documented dependencies and files macros.
+
+	* Makefile.am: adapted to targets doc/Makefile.am.
+
+	* doc/maindoc.h: workaround to what looks like a doxygen bug.
+
+	* doc/doxygen.conf.in: *** empty log message ***
+
+	* siena/bctable.h: added documentation for BCTable.
+
+	* siena/btable.h: changed warning message.
+
+	* siena/bxtable.h: added documentation for BXTable.
+
+	* doc/maindoc.h:
+	added some docs regarding Bloom-filter implementations.
+
+	* configure.ac:
+	added --with-docdir option; removed doxygen.conf from output list.
+
+	* doc/header.html.in: update reference url (www --> serl)
+
+	* doc/doxygen.conf: *** empty log message ***
+
+2004-12-22  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Version 1.8.6: this version fixes and improves the documentation
+	build process.  The documentation directory can now be set through
+	a configuration parameter.  The three implementations based on the
+	Bloom-filter encoding scheme are now documented.
+	
+	* doc/Makefile.am:
+	changed to use docdir set by configure; changed docs build process,
+	now using environment variables to parameterize doxygen.  Simplified
+	and documented dependencies and files macros.
+
+	* Makefile.am: adapted to targets doc/Makefile.am.
+
+	* doc/maindoc.h: workaround to what looks like a doxygen bug.
+
+	* doc/doxygen.conf.in: *** empty log message ***
+
+	* siena/bctable.h: added documentation for BCTable.
+
+	* siena/btable.h: changed warning message.
+
+	* siena/bxtable.h: added documentation for BXTable.
+
+	* doc/maindoc.h:
+	added some docs regarding Bloom-filter implementations.
+
+	* configure.ac:
+	added --with-docdir option; removed doxygen.conf from output list.
+
+	* doc/header.html.in: update reference url (www --> serl)
+
+	* doc/doxygen.conf: *** empty log message ***
+
+2004-10-20  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Version 1.8.5: this version includes a completely new
+	implementation of the matching algorithm for the Bloom filter
+	encoded messages and predicates.  This implementation is based on
+	the same "counting" algorithm that is used in the primary
+	forwarding table.  The implementation is available through the
+	BCTable class.  Like BXTable, this implementation is completely
+	functional, but should still be considered experimental.  This new
+	version also includes a number of improvements in the BXTable
+	implementation.
+	
+	* yysff.h, sff_parser.yy: added support for BCTable.
+
+	* sff.cc:
+	added support for BCTable; changed command-line syntax to select table
+	implementation.
+
+	* hash.h:
+	added type-specific hashing primitives to allow hashing of types other
+	than strings.
+
+	* configure.ac: version 1.8.5
+
+	* bx_table.cc:
+	significant improvements: added shortcut to true in computing XDDs;
+	replaced bit_vector with standard vector<bool>; added guards in inner
+	loop for the construction of the XDD.  These guards greatly improve
+	the efficiency of the construction process.
+
+	* bset_encoding.h: improved encoding using type-specific modifiers.
+
+	* bset.h:
+	moved some static constants outside their methods to make gcc 3.4
+	happy.
+
+	* b_table.cc:
+	removed implementation of consolidate().  Now inherits default (empty)
+	implementation.
+
+	* bc_table.cc, bc_table.h, siena/bctable.h: *** empty log message ***
+
+	* acinclude.m4: added coverage profiling library within profiling macro
+
+	* Makefile.am: added BCTable files
+
+	* siena/btable.h:
+	removed implementation of consolidate().  Now inherits default (empty)
+	implementation.
+
+	* tests/Makefile.am: fixed LDFLAGS parameter for test programs etc.
+
+	* siena/forwarding.h:
+	added default (empty) implementation of consolidate()
+
+2004-10-04  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* Version 1.8.4: this version includes two main changes to the
+	implementation of the forwarding tables based on Bloom filters.
+	The first change is a complete redesign of the BDDTable, which now
+	uses ZDDs.  This implementation is still very much work in
+	progress. In fact, it is still not completely functional.  The
+	second change is the addition of a new table based on the Bloom
+	filter encoding scheme.  This table, called BXTable, uses a
+	completely new data structure that I call XDD.  Although
+	completely functional and somewhat tested, this implementation
+	should also be considered experimental.  Another important change
+	is the isolation and improvement of the Bloom-encoding functions.
+	
+	* Makefile.am: added bxset and encoding headers.
+
+	* doc/Makefile.am: fixed main documentation target (hopefully for
+	good).
+	
+2004-10-03  Antonio Carzaniga  <firstname.lastname@usi.ch>
+
+	* siena/bxtable.h: added BXTable implementation.
+
+	* siena/bddbtable.h:
+	implementation completely changed and now based on ZDDs;
+	still not completely functional though.
+
+	* doc/Makefile.am: fixed creation of HTML doc directory.
+
+	* bset_encoding.h, bx_table.cc, bx_table.h, bxset.h:
+	factored out encoding functions;
+	added BXTable implementation.
+
+	* sff_parser.yy, yysff.h:
+	changed mechanism to switch between forwarding table implementation:
+	now only the necessary (used) data structure are created; added
+	necessary cleanup function sff_parser_shutdown.
+
+	* sff.cc: added support for BXTable;
+	added missing -p option;
+	added call to new parser_shutdown function;
+
+	* configure.ac: added option to set Bloom filter size.
+
+	* bset.h: factored out encoding functions;
+	adapted to encoding function required interface.
+
+	* bddbtable.cc:
+	implementation completely changed and now based on ZDDs;
+	still not completely functional though.
+
+	* b_table.cc, b_table.h:
+	factored out encoding functions, now in bset_encoding.h;
+	bloom filter size is now a config parameter.
+
+	* Makefile.am: added bxtable files.
+
+2004-09-19  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* Version 1.8.3: the main changes between 1.7.x and 1.8.x is the
+	addition of a completely new method for representing the
+	forwarding table, and for matching messages.  This new method is
+	based on an encoding of messages and filters into Bloom filters.
+	(Notice that the two uses of the term "filter" here are completely
+	unrelated.) This new matching is still in an experimental stage,
+	and can be selected using the -b command-line option.
+	
+	* siena/btable.h: added documentation.
+
+	* fwd_table.cc: minor cosmetic changes to code and documentation.
+
+	* bset.h:
+	added some technical documentation.  Added count() method in bset
+	class, for future use.
+
+	* bitvector.cc, bitvector.h, bitvector.icc:
+	bit-counting map moved to a separate file so that it can be shared by
+	other bitset implementations (e.g., bset.h)
+
+	* b_table.h: added documentation.
+
+	* bitcounter.cc, bitcounter.h: *** empty log message ***
+
+	* b_table.cc:
+	added some technical documentation.  Separated encoding of constraint
+	into a separate function.  Fixed bug in encoding of constraint.
+	Improved debug output in add_filter.
+
+	* Makefile.am: added bitcounter files
+
+2004-03-27  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* configure.ac:
+	removed AC_PREREQ, which may be annoying to some, and which seems
+	useless at this point.
+
+2004-03-26  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* acinclude.m4:
+	changed rdtsc test into a COMPILE test.  This should be sufficient and
+	in fact more accurate than the previous RUN test, since that would
+	have to be skipped when cross-compiling.
+
+	* configure.ac: added prerequisite for autoconf 2.57.
+
+	* sff_scanner.ll:
+	using string::operator+=(char) instead of push_back(char), which is
+	not available in some old versions of g++.
+
+	* acinclude.m4:
+	added action-if-cross-compiling to AC_TRY_RUN in AC_CHECK_RDTSC.  This
+	should prevent configure from bailing out when cross-compiling.
+
+2004-02-06  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* configure.ac, types.cc: *** empty log message ***
+
+2004-02-03  rutherfo  <rutherfo@siena.cs.colorado.edu>
+
+	* configure.ac: added handling for --with-cudd configure option
+
+	* bddbtable.cc, siena/bddbtable.h: added BDDBTable class
+
+	* siena/btable.h:
+	Changed data members of BTable to be protected so that BDDBTable can
+	access them directly.
+
+	* sff.cc, sff_parser.yy, yysff.h:
+	added logic to deal with new -B flag which signifies the usage of
+	BDDBTable.
+
+	* b_table.cc, b_table.h:
+	moved definitions of BPredicate and BFilter from b_table.cc to
+	b_table.h
+
+	* Makefile.am: added bddtable.cc and siena/bddtable.h.
+
+2004-01-28  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* siena/forwarding.h: *** empty log message ***
+
+	* types.cc: fixed and improved rpm/doc build process.
+
+	* siena/types.h:
+	added covering relations; added implementations of all string
+	comparison operators (e.g., prefix, suffix, etc.); added strict
+	throw() clauses for all string_t methods.
+
+	* siena/forwarding.h:
+	added #include <siena/fwdtable.h> for backward compatibility.
+
+	* doc/doxygen.conf.in: latex output turned off.
+
+	* doc/Makefile.am: corrected clean-local.
+
+	* Makefile.am: added types.cc
+
+	* configure.ac: version 1.8.2
+
+2004-01-27  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* configure.ac, doc/Makefile.am, sff.spec, doc/doxygen.conf.in, doc/maindoc.h:
+	fixed and improved rpm/doc build process.
+
+	* siena/btable.h: added brief documentation for BTable.
+
+2004-01-26  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* ChangeLog, bootstrap, configure.ac: *** empty log message ***
+
+2004-01-24  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* acinclude.m4: added correct quoting of RDTSC test.
+
+	* siena/fwdtable.h: New file.
+
+	* siena/forwarding.h:
+	added support and adapted documentation for bloom-table.
+
+	* yysff.h: added support for bloom-table.
+
+	* string_index.h: adapted to new includes structure.
+
+	* Makefile.am: new includes and sources for bloom table.
+
+	* sff_parser.yy:
+	added support for bloom-table; adapted to new includes structure.
+
+	* sff.cc: added support for bloom-table.
+
+	* hash.h: added template version of the poly-mod-p hash.
+
+	* fwd_table.h, fwd_table.cc, constraint_index.h:
+	adapted to new includes names.
+
+	* configure.ac: added enabler for optional debugging messages
+
+	* b_table.cc: *** empty log message ***
+
+	* b_table.h: New file.
+
+	* bset.h: *** empty log message ***
+
+2004-01-09  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* doc/Makefile.am:
+	made 'doc' target implicit in 'all' (i.e., required by 'all')
+
+	* acinclude.m4: simplified (corrected) some OPT tests.
+
+	* configure.ac: version 1.7.2
+
+	* constraint_index.h: added constructor to fix critical bug.
+	Thanks to Matt Rutherford <rutherfo@cs.colorado.edu>
+
+2004-01-09  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* Version 1.7.2: critical bugfix.
+
+	* configure.ac: version 1.7.2
+
+	* constraint_index.h: added constructor to fix critical bug.
+	Thanks to Matt Rutherford <rutherfo@cs.colorado.edu>
+
+2003-12-22  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* Version 1.7.1: this version features precise size methods for
+	allocator as well as small fixes and improvements.
+	
+	* string_index.cc:
+	implemented decent hash function for bloom set of pointer to
+	Constraint.
+
+	* hash.h, fwd_table.h: removed generic 'using namespace std' clause
+
+	* ft_allocator.cc:
+	implemented proper size() and allocated_size() methods.
+
+	* constraint_index.h: removed generic 'using namespace std' clause
+
+	* configure.ac: added AC_OPT_STD_BITSET; updated version.
+
+	* bloom_set.h: optional use of C++ std <bitset>
+
+	* acinclude.m4:
+	added proper quoting of AC_DEFINE; added a few words of documentation
+	to OPT_PROFILING.
+
+	* tests/alloca.cc: added tests for size methods.
+
+	* siena/allocator.h:
+	added proper size() and allocated_size() methods.  Reduced main block
+	size to 16Kb.
+
+	* siena/forwarding.h: added allocated_bytesize method and
+	documentation.
+
+2003-11-07  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* Version 1.7.0: this version features a new implementation of one
+	of the constraint indexes for the forwarding table.  This
+	introduces an important change in the operations of the forwarding
+	table, which must be "consolidated" before it can be used for
+	matching (details are available within the HTML documentation).
+	This version also includes some tweaks in the implementation and
+	use of Bloom filters and some other minor fixes.
+	
+	* constraint_index.h:
+	major changes: we no longer use <vector> and <map> as a basis to index
+	constraints.  Instead, constraint_index uses a dual-mode data
+	structure defined in v_index. v_index allows for incremental
+	construction of indexes of values in sorted vectors.  Once all the
+	elements have been added, v_index can be consolidated and packed into
+	an array that features faster and more memory-efficient access
+	functions.  A lot of the code has been moved to v_index.h.
+
+	* fwd_table.cc:
+	added consolidate method and auxiliary data structures; added
+	destructor; modified clear and clear_recycle to integrate with
+	consolidate.
+
+	* Makefile.am: added v_index.h and hash.cc to source files list.
+
+	* hash.h: implementation moved to .cc file.
+
+	* configure.ac:
+	version 1.7.0; added AC_OPT_ASSERTIONS to --enable-assertions.
+
+	* acinclude.m4: added AC_OPT_ASSERTIONS
+
+	* bloom_set.h: slightly more efficient implementation of % size.
+
+	* stst.cc:
+	fixed use of assetions; changed to use array of root elements.
+
+	* string_index.cc: fixed use of assertions.
+
+	* sff_scanner.ll: added consolidate token.
+
+	* sff_parser.yy: added consolidation directive and consolidation guard.
+
+	* doc/driver.input: added %consolidate directive
+
+	* doc/doxygen.conf.in: adapted to new version of doxygen.
+
+	* doc/maindoc.h: added documentation for %consolidate directive
+
+	* tests/strings.sh, tests/ne.sh, tests/names.sh, tests/lt.sh, 
+	  tests/gt.sh, tests/eq.sh, tests/any.sh:
+	adapted to consolidation process
+
+2003-11-04  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* bloom_set.h: removed unused inclusion of <bitset>
+
+2003-10-29  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* compare.sh: New file.
+
+2003-09-23  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* Version 1.6.4: this version includes some minor documentation
+	updates and a change in the structure that implements the list of
+	filters hanging off of each Constraint descriptor.  This change is
+	purely for performance improvement.  The improvements are due to
+	the better memory locality of this solution.  I was able to test
+	overall performance improvements of up to 10%.
+	
+	* configure.ac: version 1.6.4
+
+2003-09-21  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* fwd_table.cc:
+	adapted connect() and process_constraint() to new Constraint
+	structure.
+
+	* fwd_table.h:
+	changed Constraint structure to include the pointer to the first (and
+	possibly only) filter in which the constraint appears.  This makes
+	sense since a constraint will always appear in at least one filter,
+	and having the filter (pointer) right there with the constraint gets
+	rid of an indirection and a memory de-reference.  It should also
+	reduce memory usage a bit.
+
+2003-09-19  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* sff.spec: updated package description with SIGCOMM citation
+
+2003-09-01  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* Version 1.6.3: the main changes in this version consisted in
+	removing dependencies from the (external) Standard C++ library.
+	In doing that, I also tried to clean up and streamline some
+	algorithms.  In particular, this version features an improved
+	computation of the selectivity table as well as a new
+	implementation of a negative check inside the matching function of
+	the string index. This version also fixes a few interfaces for the
+	Bloom set implementation.  
+	
+	* configure.ac: version 1.6.3
+
+	* string_index.cc:
+	isolated assertions in #ifdef blocks, excluded by default.  Replaced
+	set<Constraint*> with special data structure.
+
+	* hash.h, bloom_set.h: added throw() clause to all methods.
+
+	* fwd_table.cc:
+	removed all external library elements, including <iostream> and <list>
+	stuff.  Improved and corrected code that computes selectivity
+	attributes in ifconfig.  This version is more robust since it does not
+	assume that attribute constraints come in alphabetical order.
+
+2003-08-29  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* Version 1.6.2: this version adds a negative check in the main
+	matching algorithm.  This check uses Bloom sets, statically
+	computed for filters, and dynamically computed for input messages,
+	to skip the processing of filters that can not be matched because
+	one or more of their constraint names are not present in the
+	message.  This simple optimization yields performance improvements
+	of up to 80%, and is especially effective in the most
+	performance-critical cases (when I~F).	
+	
+	The use of Bloom sets in the matching function was suggested by
+	Scott Walker <scott@dcs.st-and.ac.uk> and Al Dearle
+	<al@dcs.st-and.ac.uk>.
+
+	* configure.ac: version 1.6.2
+
+	* fwd_table.h: added Bloom sets to Filter.
+
+	* fwd_table.cc:
+	added Bloom sets; added tmp var for attribute and constraint names.
+
+2003-08-28  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* bloom_set.h: improved and fixed.
+
+2003-08-24  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* hash.h, bloom_set.h: New file.
+
+	* Makefile.am: added hash.h and bloom_set.h
+
+	* fwd_table.h: added bloom-set in CProcessor
+
+	* fwd_table.cc: added bloom-set check in CProcessor::process_constraint
+
+2003-07-31  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* Version 1.6.1: moved allocator code back to ft_allocator.cc.
+	This turns the allocator code into actual function calls (as
+	apposed to inline code), and makes sff slightly faster.  This
+	version also allows to output sff statistics using a given format
+	string.
+	
+	* types.h: fixed small bug in documentation formatting
+
+	* allocator.h: allocator (inline) code moved to .cc file
+
+	* configure.ac: Version 1.6.1
+
+	* sff_parser.yy: added statistics formatting code
+
+	* sff.cc:
+	added -o parameter to specify a format string for stats output
+	added format specs to usage message
+
+	* yysff.h: changed interface of print_statistics()
+
+	* ft_allocator.cc: moved new allocator code in here (from allocator.h)
+
+	* Makefile.am: added back ft_allocator.cc
+
+2003-07-13  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* Version 1.6.0: fixed a memory alignment issue in SFF allocator.
+	
+	* tests/Makefile.am: added allocator test
+
+	* tests/bv.cc: adapted to new FTAllocator interface
+
+	* tests/allocator.sh, tests/alloca.cc: New file.
+
+	* siena/forwarding.h:
+	adapted FwdTable constructor to new FTAllocator interface.
+
+	* siena/allocator.h:
+	now uses fixed-size blocks.  This eliminates dangerous static_casts.
+	All methods are now inline and have been moved into this header.
+	Corrected test for alignment detection and cleaned up the main
+	allocation routine.  These changes correct a bug that caused
+	misalignment (crashes) on sparc+solaris.
+
+	* configure.ac: version 1.6.0
+
+	* Makefile.am: removed ft_allocator.cc
+
+	* patricia.h, sff_parser.yy: adapted to new FTAllocator interface
+
+	* sff.cc:
+	expanded usage/copyright message; changed to catch std::exception, to
+	avoid confusions with siena::exception (fixes compilation error on
+	sparc+solaris).
+
+	* fwd_table.cc: adapted to new FTAllocator interface
+
+2003-07-01  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* Version 1.5.2: important bug fix in string index.
+	(thanks a lot to Matt Rutherford).
+	
+	* configure.ac: version 1.5.2
+
+	* string_index.cc:
+	fixed a nasty bug in insert_between() that didn't take into
+	account the presence of a NE constraint in the previous element
+
+2003-06-27  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+	
+	* Version 1.5.1: minor bug fix in sff driver.  Modification in
+	tests to use current "make", i.e., whatever "make" the user runs
+	(suggested by Matt Rutherford).
+	
+	* configure.ac:
+	added explanation on libtool versioning; bumped to 1.5.1
+
+	* tests/Makefile.am: test target now sets MAKE env variable
+
+	* tests/bitvector.sh, tests/patricia.sh: changed to use env
+	variable MAKE
+
+2003-06-25  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* sff.cc: corrected spelling bug in usage message.
+
+2003-06-24  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* Version 1.5.0: this version includes a more current and better
+	autoconf setting; a better versioning scheme for the library; the
+	ability to use the Intel-specific rdtsc cpu counter for
+	performance measurements; a bug fix for a platform-specific bug in
+	the implementation of dynamic bitvector; a complete specification
+	of throw() clauses for all the SFF API; a better handling of the
+	parsing of ANY constraints; a cleaner interface between lexer and
+	parser for the sff driver.
+	
+	* bitvector.h:
+	removed _mask and _index constants.  Used CHAR_BIT constant defined by
+	<climits> instead of literal 8 (paranoia).
+
+	* bitvector.icc, bitvector.cc:
+	fixed very subtle data-type bug that shows up only on alphas.  Changed
+	logic to use only bv_atom_bits: replaced X & bv_atom_bits_mask with
+	X % bv_atom_bits, and replaced X >>= bv_atom_bits_shift with
+	X /= bv_atom_bits.  These new operations are more general and portable.
+
+2003-06-23  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* sff.cc:
+	now uses PACKAGE_NAME and PACKAGE_VERSION, defined by autoconf
+
+	* configure.ac:
+	changed name to configure.ac; simplified libtool versioning; removed
+	unused SFF_ variables and SUBST; changed to use a separate
+	AC_CONFIG_FILES macro with a simple AC_OUTPUT
+
+	* acinclude.m4:
+	added check for (optional) profiling, moved from configure.ac
+
+2003-06-10  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* yysfftypes.h:
+	changed sffstype: removed unused variables, string value moved within
+	anonymous union as a string*.
+
+	* yysff.h, stst.cc, string_index.h, string_index.cc, simple_fwd_types.icc, simple_fwd_types.h:
+	added throw() statement to all methods.
+
+	* sff_scanner.ll:
+	added throw() statement to some methods; adapted to new (uniform)
+	YYSTYPE definition; corrected return values for integer, string,
+	boolean, and double keywords.
+
+	* sff_parser.yy:
+	added throw() statement to all methods; added siena/exceptions.h;
+	added rdtsc timer functionality; improved parsing rules for "any"
+	constraints; adapted to new uniform YYSTYPE definition.
+
+	* sff.cc, patricia.h: added throw() statement to all methods.
+
+	* Makefile.am: added exceptions source and header files.
+
+	* fwd_table.h:
+	added throw() statement to most methods; added siena/exceptions.h;
+
+	* fwd_table.cc:
+	added throw() statement to all methods; added siena/exceptions.h;
+	changed add_constraint() to throw exceptions, instead of printing
+	error messages
+
+	* ft_allocator.cc, constraint_index.h, bool_index.h, bool_index.cc, bitvector.icc, bitvector.cc, bitvector.h:
+	added throw() statement to all methods.
+
+2003-06-09  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* bool_index.icc: *** empty log message ***
+
+2003-06-06  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* configure.ac: added RDTSC check
+
+	* acinclude.m4: New file.
+
+2003-04-24  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* configure.ac: version 1.4.0
+
+	* Version 1.4.0: this version includes a small change in the SFF
+	message API.
+
+	* types.h: changed interface of message::find(): now returns an
+	attribute (pointer) instead of an iterator.  This makes more sense
+	since the API does not mandate any particular iteration order.
+
+	* configure.in:  ~ version 1.3.5
+
+2003-04-01  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+	
+	* Version 1.3.5: This new version features an expanded set of
+	examples, additional documentation and a new style for the
+	documentation pages.
+
+	* maindoc.h, forwarding_messages.cc: New file.
+
+	* Makefile.am: added new example files
+
+	* header.html.in: changed darker background
+
+	* footer.html: changed different background
+
+	* antodoc.css: changed major changes and improvements
+
+	* doxygen.conf.in: added maindoc.h
+
+	* configure.in: version 1.3.5
+
+2003-03-03  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* Version 1.3.4: this version contains a couple of bug fixes.
+
+	* configure.in: version 1.3.4
+
+	* sff.cc: uses full qualified name for std objects and classes.
+	For some reason g++ could not recognize class exception on
+	solaris.  This is a workaround for that problem.
+
+	* bool_index.h: fixed bug in constructor: added missing
+	initialization of any_value constraint that caused segfault
+	(contributed by Matt Rutherford)
+
+	* doc/Makefile.am: changed workaround for (dumb) make on FreeBSD
+	not understanding $<
+
+2003-02-25  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* Version 1.3.3: I restructured, debugged and cleaned up the new
+	insert/search algorithms for the multi-operator string index.  The
+	use of masks to prune the traversal of the TST is now pervasive in
+	all the algorithms.  Hopefully this version of the algorithm will
+	be robust to future changes.  This version also fixes a couple of
+	bugs.  One was in the test programs for strings (!).  The other
+	one was a minor bug in the dependency information for automake.
+	
+	* configure.in: version 1.3.3
+
+	* string_index.h: removed first and last
+
+	* string_index.cc: some cleanup; added some const qualifier where
+	appropriate; removed unused functions
+
+	* Makefile.am: removed automake conditional for profiling flags;
+	added AC_SUBST-style profiling flags @CXXFLAGS_prof@ etc.; added
+	necessary dependency sff_DEPENDENCIES: libsff.la; removed ptst
+	files
+
+	* configure.in: fixed and improved handling of --enable-profiling;
+	profiling option now uses AC_SUBST instead of automake conditional
+
+	* string_index.h: added included here PTST data structure
+
+	* string_index.cc: major reimplementation with pervasive use of
+	masks; major changes in match()
+
+2003-02-22  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* ptst.cc, ptst.h, stst.cc: New file.
+
+2003-02-19  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* Version 1.3.2: I implemented new insert/search algorithms for
+	the multi-operator string index that uses a mask to walk into dead
+	branches of the tree.  In doing that I also reorganized the two
+	implementations of the ternary tree, separating the one that
+	servers as attribute name index from the one that serves as the
+	basis for the multi-operator string index.  I also implemented a
+	PATRICIA trie to implement the map between filter and counters.
+	To do that cleanly, I also added filter identifiers to the
+	forwarding table.
+	
+	* configure.in: fixed handling of profiling option with correct
+	implied DISABLE/ENABLE for shared libraries; changed version 1.3.2
+
+	* patricia.h: fixed patricia trie search/insert algorithm,
+	hopefully for good; added optional (WITH_PATRICIA_PRINT) print
+	methods
+
+	* string_index.h: adapted to the interface changes in PTST; inline
+	methods moved into this file
+
+	* string_index.cc: adapted to the interface changes in PTST;
+	adapted to new search/insert methods that use masks
+
+	* Makefile.am: removed deprecated tst header; removed deprecated
+	.icc files; added new ptst and stst headers and sources
+
+	* fwd_table.cc: includes stst.h instead of deprecated tst.h
+
+	* bool_index.h: inline methods moved to this header file
+
+2003-02-14  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* tst.cc: added register specifier for some performance-critical
+	variables
+
+	* Makefile.am: added patricia.h
+
+	* fwd_table.h: CProcessor now uses my patricia_map instead
+	std::map; added filter identifier
+
+	* fwd_table.cc: *** empty log message ***
+
+	* patricia.h: minor change to compact a block and remove a
+	variable
+
+	* patricia.h: New file.
+
+2003-02-11  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* string_index.cc: minor modifications to clear -Wall compiler
+	warnings
+
+	* simple_fwd_types.icc: fixed minor bugs
+
+	* sff.spec: added --disable-dependency-tracking to speed up build
+	process
+
+	* configure.in: added profiling option --enable-profiling
+
+	* sff.cc: minor bugfixes; updated copyright message
+
+	* fwd_table.h: CProcessor::process_constraint no longer virtual,
+	   since I wasn't really using it as a virtual function.
+
+	* fwd_table.cc: minor mods to clear (pedantic) compiler warnings
+
+	* Makefile.am: added profiling option
+
+	* types.h: added virtual destructors for basic siena objects
+
+2003-02-10  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* sff_parser.yy, fwd_table.cc, bool_index.h, bool_index.cc,
+	string_index.h: added not-equal operator
+
+	* constraint_index.h: added handling of not-equal constraints
+
+	* configure.in: version 1.3.0
+
+	* string_index.cc: added handling of not-equal constraints
+
+	* tst.cc: fixed lower_bound for the case of a complete prefix
+
+	* tst.h: upper_bound and lower_bound now return const TSTNode *
+
+	* allocator.h: *** empty log message ***
+
+	* types.h: added not-equal operator
+
+2003-01-31  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* configure.in: version 1.2.2
+
+	* sff_scanner.ll: added '.' '/' and '-' as valid intermediate
+	chars in identifiers ao now you can write things like: a/b-c = 7
+	/\ x.y.z < 10; replaced atoi() with strtol() and strtoll()
+
+	* sff_parser.yy: fixed small bug in IPrinter::flush
+	(thanks to John Giacomoni)
+
+	* forwarding.h: added driver input syntax specification
+
+2003-01-26  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* yysff.h, tst.icc, tst.h, tst.cc, string_index.icc,
+	string_index.h, string_index.cc, simple_fwd_types.icc,
+	simple_fwd_types.h, sff_scanner.ll, sff_parser.yy, fwd_table.h,
+	fwd_table.cc: copyright years
+
+	* constraint_index.h, bool_index.icc: *** empty log message ***
+
+	* bool_index.h, bool_index.cc, yysfftypes.h, Makefile.am: changed
+	copyright years
+
+	* simple_fwd_types.h: uses siena proper types (e.g., siena::int_t)
+	as opposed to predefined types
+
+	* sff_scanner.ll: added type keywords; added "any" operator; added
+	sanity check before closing yyin
+
+	* sff_parser.yy: added "any" operators; added "type" keywords
+
+	* fwd_table.cc: added "any" constraints; added "anytype"
+	constraints; uses proper siena types, instead of predefined types;
+	removed unused include
+
+	* constraint_index.h, bool_index.icc, bool_index.h, bool_index.cc:
+	added "any" operator
+
+	* simple_fwd_types.icc: added "any" operator; uses siena types
+	(e.g., siena::int_t) instead of predefined types
+
+	* string_index.cc: added handling of "any" operators; changed
+	fixed matching of empty strings
+
+	* string_index.h: added "any_value" flag; added "any" add method
+
+	* string_index.icc: added "any_value" flag
+
+	* yysfftypes.h: proper siena type used instead of predefined types
+
+	* configure.in: version 1.2.1
+
+	* driver.input: added example with "any" operator
+
+	* tests/Makefile.am: added "any" tests
+
+	* tests/eq.sh: added 32-bit values
+
+2002-12-02  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* sff.spec: New file.
+
+2002-11-26  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* configure.in: removed corrected (removed) BETA_VERSION tag
+
+	* Makefile.am: added rpm stuff; added cleanup stuff
+
+	* fwd_table.h: adapted to changed name of IProcessor to
+	MatchHandler
+
+	* fwd_table.cc: adapted to changed name of IProcessor to
+	MatchHandler; added new FwdTable::match() method using
+	MatchMessageHandler
+
+	* sff.cc: changed usage message
+
+	* sff_parser.yy: adapted to new MatchHandler interface
+
+	* configure.in: added test for rpmbuild
+
+	* sff_scanner.ll: added /\ and && tokens for logical conjunction
+	operator; added \/ and || tokens for logical disjunction operator
+
+2002-11-10  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+
+	* NEWS: *** empty log message ***
+
+	* configure.in: version 1.1.2; fixed empty docpackage.tar.gz;
+	moved documentation output to doc dir
+
+	* Makefile.am: added doc subdir; removed documentation section,
+	moved to doc/Makefile.am
+
+	* examples/: removed; removed documentation examples moved to doc/
+	
+	* doc/doxygen.conf.in: adapted to doc subdir settings
+
+	* doc/Makefile.am: New file.
+
+2002-11-09  Antonio Carzaniga  <carzanig@cs.colorado.edu>
+	
+	Initial Release	(baseline)

@@ -1,0 +1,20 @@
+g++: error: vc/sff-2.0.1/.libs/24099-lt-sff: No such file or directory
+g++: error: sff_parser.o: No such file or directory
+g++: error: sff_scanner.o: No such file or directory
+g++: error: sff.o: No such file or directory
+g++: error: simple_attributes_types.o: No such file or directory
+g++: error: simple_tags_types.o: No such file or directory
+g++: error: ./.libs/libsff.so: No such file or directoryn0a1,13
+> ->
+> -> 1 3
+> -> 1 2
+> ->
+> ->
+> ->
+> -> 1 2 4 5 6 7
+> -> 1 2
+> -> 5 6 7
+> ->
+> -> 6 7
+> -> 7
+> -> 8

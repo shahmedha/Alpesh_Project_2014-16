@@ -1,0 +1,10 @@
+//
+// first constraint:
+//
+ifconfig 3 x = 5;
+//
+select x = 4;
+select x = 5;
+select x = 6;
+select x = 7;
+select x = 8;

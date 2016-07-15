@@ -1,0 +1,44 @@
+# -*- shell-script -*-
+exec $1 -q -p -o "statistics: %i %f %c %n %a %m %M\n" <<EOF 
+//
+// first constraint:
+//
+ifconfig 3	x = 5
+	|	c = 10
+	|	x = 6, y = 1
+	|	a < 6, x > 1;
+
+ifconfig 4	x > 0,	y = 1
+	|	y = 1, c > 0
+	|	y = 1, a = 1
+	|	y = 1, a = 2
+	|	y = 1, a = 3
+	|	y = 1, a = 4;
+
+ifconfig 5	x = 0,	y = 4
+	|	c > 0
+	|	x > 0,	y = 10
+	|	x > 0,	y = 11
+	|	x > 0,	y > 20
+	|	x > 0,	b = 1;
+
+ifconfig 6	x > 4,	y > 0
+	|	c > 0
+	|	y = 5
+	|	y > 5, x = 10, a > 2;
+
+ifconfig 7	x < 5,	y < 4
+	|	c > 1;
+
+ifconfig 8	y < 10 
+	|	c > 1;
+//
+select c = 10 x = 4 a = 12 y = 1;
+select x = 4 a = 12 y = 200;
+select a = true b = 10 y = 200;
+select x = 5 y = 1;
+select y = 6 xx = 10;
+select y = 6 xx = 10 x = 10;
+select a = 6 b = 7 x = 5 y = 1;
+//
+EOF

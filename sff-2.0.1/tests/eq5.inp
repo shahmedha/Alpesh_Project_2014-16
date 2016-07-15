@@ -1,0 +1,17 @@
+//
+ifconfig 3 x = 5;
+ifconfig 4 x = 7;
+ifconfig 1 x = 2;
+ifconfig 2 x = 2;
+ifconfig 9 x = 7;
+ifconfig 10 x = -1;
+ifconfig 11 x = 0xffffffff;
+//
+select x = 2 a = 4;
+select x = 7;
+select x = -1;
+select x = 0xff;
+select x = 0xffff;
+select x = 0xffffffff;
+select x = 8;
+//

@@ -1,0 +1,5 @@
+ifconfig 5 X = "n";
+ifconfig 119 X > "o";
+ifconfig 317 X > "nv";
+ifconfig 481 X < "o";
+select  X = "z";

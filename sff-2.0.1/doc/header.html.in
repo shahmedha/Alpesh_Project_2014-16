@@ -1,0 +1,15 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html lang="en">
+<head>
+<title>Siena Fast Forwarding Documentation</title>
+<meta http-equiv="Owner" content="Antonio Carzaniga">
+<meta name="Author" content="Antonio Carzaniga">
+<link href="antodoc.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="headline"><a
+href="http://www.inf.usi.ch/carzaniga/cbn/forwarding/">Siena
+Fast Forwarding</a> Documentation (v. @VERSION@)
+</div>
+<div class="normaltext">

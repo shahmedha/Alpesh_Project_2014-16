@@ -1,0 +1,5 @@
+hash.lo: hash.cc /usr/include/stdc-predef.h hash.h
+
+/usr/include/stdc-predef.h:
+
+hash.h:

@@ -1,0 +1,24 @@
+ifconfig 3 x > "anto";
+ifconfig 4 x < "anto";
+ifconfig 5 y != "antonio";
+ifconfig 10 name =* "anto";
+ifconfig 11 name = "abbagnale";
+ifconfig 12 name =* "abba";
+ifconfig 13 name = "abba";
+ifconfig 14 name ** "bb";
+ifconfig 15 name ** "ba";
+ifconfig 16 name *= "dante";
+ifconfig 17 name *= "onda";
+ifconfig 18 name ** "onda";
+ifconfig 20 name < "xxx" ;
+ifconfig 21 name > "aaa" ;
+ifconfig 22 name > "anna" ;
+ifconfig 23 name > "aaabc" ;
+ifconfig 24 name > "aaabba" ;
+ifconfig 25 name < "bravo" ;
+ifconfig 26 name != "barbara";
+ifconfig 27 name != "anto";
+ifconfig 30 z != "shaped";
+ifconfig 31 z = "struts";
+select z = "shoppers";
+//

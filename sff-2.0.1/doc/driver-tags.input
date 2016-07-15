@@ -1,0 +1,105 @@
+// 
+// C-style and C++-style comments are allowed.
+//
+ifconfig 2	{ "Emacs" "tips" },		// tags are string 
+	 	{ Emacs elisp example },	// identifiers may work as well
+		{ "quantum physics" },
+		{ "free software" "Richard Stallman" },
+		{ "music" },
+		{ "documentary" },
+		{ "Led Zeppelin" };
+		
+//
+// interface numbers do not have to be consecutive, 
+// nor they have to always increasing.  However, they have to be *unique*!
+//
+ifconfig 10	{ "politics" "anarchism" "anarcho-syndicalism" }
+	 	{ "Noam Chomsky" }
+		{ "Howard Zinn" }		// commas to separate tag sets
+		{ "zinn" }			// are optional
+		{ "chomsky" }
+		{ "Richard Feynman" "interview" }
+		{ "Richard Feynman" "lecture" }
+		{ "film" "cohen brothers" }
+		{ "cohen" "joel" "ethan" } ;	// but you must have a semicolon here
+;
+
+//
+// before using the forwarding table to process messages, 
+// we *must* consolidate its data structures.  
+//
+consolidate;
+
+//
+// the driver has the ability to collect statistics regarding the
+// forwarding table, including the amount of processing (user) time
+//
+timer start;
+
+select		{ Emacs "new release" };
+select		{ politics "free software" "Richard Stallman" essay };
+select		{ lecture "Richard Feynman" "quantum physics" "photon" "electron" };
+select		{ concert "Led Zeppelin" "New York" };
+select		{ "documentary" "Howard Zinn" };
+
+timer stop;
+statistics;
+
+//
+// we can clear the forwarding table using this command
+//
+clear;
+//
+// clear also deallocates all the memory used by the forwarding table
+// in order to clear the table maintaining (i.e., recycling) the
+// allocated memory, we could use this:
+// 
+// clear recycle;
+//
+
+//
+// The following directives are supported:
+//
+// statistics [format-string]
+// prints the current statistics using the given format string, or the
+// preconfigured format string if none is given
+//
+// set statistics_only = true
+// only reads and counts the input predicates and messages, without
+// compiling or a forwarding table.  This might be useful to count the
+// number of filters, predicates, constraints, etc. in a particular
+// file.
+//
+// timer start;
+// starts the performance timers
+//
+// timer stop;
+// stops the performance timers
+//
+// output on;
+// activates the normal output of the matcher 
+//
+// output off;
+// suppresses the normal output of the matcher
+//
+// output > [filename];
+// redirects the output of the matcher to the given file, or to
+// standard output if a name is not given
+//
+// set preprocessing_limit = <N>;
+// sets the number of preprocessing rounds for the FwdTable algorithm.
+//
+// clear;
+// clears the forwarding table.  This is necessary to reconstruct the
+// table (from scratch).  This operation also releases the memory allocated
+// for the forwwarding table.
+//
+// clear recycle;
+// clears the forwarding table without releasing the allocated memory.
+// This means that the memory will be recycled for the new content of
+// the table.
+//
+// consolidate;
+// consolidates the current value of the forwarding table.  This is
+// *necessary* before the forwarding table can be used for matching.
+//

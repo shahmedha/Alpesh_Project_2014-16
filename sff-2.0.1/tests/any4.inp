@@ -1,0 +1,17 @@
+ifconfig 3 x any integer;
+ifconfig 4 y any integer;
+ifconfig 5 y any any;
+ifconfig 6 y any string;
+ifconfig 7 y any double;
+ifconfig 8 y any boolean;
+//
+consolidate;
+//
+select y = 8;
+select y = 200;
+select y = "s";
+select y = "";
+select y = false;
+select y = 1.2;
+select y = 12.0;
+//

@@ -1,0 +1,2 @@
+Compile: nvcc -arch sm_20 program.cu
+Run: ./a.out

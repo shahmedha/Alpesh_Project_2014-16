@@ -1,0 +1,11 @@
+//
+ifconfig 3 x = false;
+ifconfig 4 x = true;
+ifconfig 6 x != false;
+ifconfig 8 x != true;
+//
+select x = 4;
+select x = true;
+select x = 6;
+select x = false;
+select x = 8;

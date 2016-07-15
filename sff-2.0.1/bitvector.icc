@@ -1,0 +1,234 @@
+// -*- C++ -*-
+//
+//  This file is part of Siena, a wide-area event notification system.
+//  See http://www.inf.usi.ch/carzaniga/siena/
+//
+//  Authors: Antonio Carzaniga
+//  See the file AUTHORS for full details. 
+//
+//  Copyright (C) 2002 University of Colorado
+//
+//  Siena is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//  
+//  Siena is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//  
+//  You should have received a copy of the GNU General Public License
+//  along with Siena.  If not, see <http://www.gnu.org/licenses/>.
+//
+#include <cstddef>
+
+namespace siena_impl {
+
+inline bitvector::bitvector(const bitvector & x) 
+    : size(x.size), count(x.count) {
+    size_t s = atom_size(size);
+    elements = new bv_block[s];
+    while(s-- > 0) {
+	elements[s] = x.elements[s];
+    }
+}
+
+inline bitvector::bitvector(size_t s, bool v) : size(s), count(0) {
+    s = atom_size(size);
+    elements = new bv_block[s];
+    bv_block value = 0;
+    if (v) { 
+	value = ~value;
+	count = size;
+    }
+    while(s-- > 0) {
+	elements[s] = value;
+    }
+}
+
+inline bitvector::bitvector(bv_block * e, size_t s, bool v) 
+    : elements(e), size(s), count(0) {
+    s = atom_size(size);
+    bv_block value = 0;
+    if (v) { 
+	value = ~value;
+	count = size;
+    }
+    while(s-- > 0) {
+	elements[s] = value;
+    }
+}
+
+inline bitvector::bitvector(bv_block * e, const bitvector & x) 
+    : elements(e), size(x.size), count(x.count) {
+    size_t s = atom_size(size);
+    while(s-- > 0) {
+	elements[s] = x.elements[s];
+    }
+}
+
+inline bitvector & bitvector::operator = (const bitvector & x) {
+    size_t s = atom_size(size);
+    count = x.count;
+    while(s-- > 0) {
+	elements[s] = x.elements[s];
+    }
+    return *this;
+}
+
+inline bitvector & bitvector::operator &= (const bitvector & x) {
+    size_t s = atom_size(size);
+    while(s-- > 0 && count > 0) {
+	count -= popcount(elements[s]);
+	elements[s] &= x.elements[s];
+	count += popcount(elements[s]);
+    }
+    return *this;
+}
+
+inline bool bitvector::operator < (const bitvector & x) const {
+    for(size_t i = 0; i < atom_size(size); ++i) {
+	if (elements[i] < x.elements[i]) {
+	    return true;
+	} else if (elements[i] > x.elements[i]) {
+	    return false;
+	} 
+    }
+    return false;
+}
+
+inline bool bitvector::operator == (const bitvector & x) const {
+    if (count != x.count) return false;
+    size_t s = atom_size(size);
+    while(s-- > 0) {
+	if (elements[s] != x.elements[s]) {
+	    return false;
+	} 
+    }
+    return true;
+}
+
+inline bitvector::~bitvector() {
+    delete [] elements;
+}
+
+inline size_t bitvector::get_count() const { return count; }
+inline size_t bitvector::get_size() const { return size; }
+
+inline bool bitvector::operator[](register size_t pos) const {
+    size_t i = BV_BLOCK_INDEX(pos);
+    if (i >= size) return false;
+    register bv_block atom_mask = 1;
+    atom_mask <<= bit_position(pos);
+    return (elements[i] & atom_mask);
+}
+
+inline bool bitvector::test(register size_t pos) const {
+    size_t i = BV_BLOCK_INDEX(pos);
+    if (i >= size) return false;
+    register bv_block atom_mask = 1;
+    atom_mask <<= bit_position(pos);
+    return (elements[i] & atom_mask);
+}
+
+inline bool bitvector::set(register size_t pos) {
+    size_t i = BV_BLOCK_INDEX(pos);
+    if (i >= size) return false;
+    register bv_block atom_mask = BV_BLOCK_ONE << BV_POS_IN_BLOCK(pos);
+    if ((elements[i] & atom_mask)) {
+	return true;
+    } else {
+	elements[i] |= atom_mask;
+	++count;
+	return false;
+    }
+}
+
+inline bool bitvector::clear(register size_t pos) {
+    unsigned int i = atom_position(pos);
+    if (i >= size) return false;
+    register bv_block atom_mask = BV_BLOCK_ONE << BV_POS_IN_BLOCK(pos);
+    if ((elements[i] & atom_mask)) {
+	elements[i] &= ~atom_mask;
+	--count;
+	return false;
+    } else {
+	return true;
+    }
+}
+
+inline size_t bitvector::set(bv_block * x, 
+			     bv_block * xend, 
+			     const bv_block * y, 
+			     const bv_block * yend) {
+    register size_t result = 0;
+
+    for(result = 0; x != xend && y != yend; ++x, ++y) {
+	// we count the bits of y that are not in x 
+	result += popcount((*x & *y) ^ *y);
+	*x |= *y;
+    }
+    return result;
+}
+
+inline ibitvector::block::block(index *idx) : up(idx) {
+    for(size_t i = 0; i < block_size; ++i)
+	elements[i] = 0;
+}
+
+inline ibitvector::index::index(index *idx) : up(idx) {
+    for(size_t i = 0; i < index_size; ++i) {
+	down[i].i = NULL;
+	down[i].b = NULL;
+    }
+}
+
+inline ibitvector::ibitvector() 
+    : count(0), size(0), first_block(NULL) {}
+
+inline size_t ibitvector::get_count() const { return count; }
+inline size_t ibitvector::get_size() const { return size + 1; }
+
+inline void ibitvector::clear() {
+    count = 0;
+    size = 0;
+    first_block.up = NULL;
+    for(register size_t i = 0; i < block_size; ++i)
+	first_block.elements[i] = 0;
+}
+
+inline ibitvector::iterator::iterator(const block & b) 
+    : bi(b.up), addr(0), level(0) {}
+
+inline size_t ibitvector::iterator::element_address() const {
+    return addr * block_size;
+}
+
+inline const ibitvector::block * ibitvector::iterator::next_block() {
+    while (bi != NULL) {
+	++addr;
+	if ((addr % index_size) != 0) {
+	    if (level == 0) {
+		if (bi->down[addr % index_size].b != NULL)
+		    return bi->down[addr % index_size].b;
+	    } else {
+		if (bi->down[addr % index_size].i != NULL) {
+		    bi = bi->down[addr % index_size].i;
+		    addr *= index_size;
+		    --level;
+		}
+	    }
+	} else {
+	    //
+	    // end of index at this level
+	    //
+	    bi = bi->up;
+	    ++level;
+	    addr /= index_size;
+	}
+    }
+    return NULL;
+}
+
+} // end namespace siena_impl

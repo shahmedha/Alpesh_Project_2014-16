@@ -1,0 +1,5 @@
+ifconfig 3 x > "anto";
+ifconfig 4 x < "anto";
+//
+select x = "antonio";
+//

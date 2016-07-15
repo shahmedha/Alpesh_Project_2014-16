@@ -1,0 +1,24 @@
+//
+// first constraint:
+//
+ifconfig 1	antonio = 1;
+ifconfig 2	a = 1;
+ifconfig 3	anto = 1;
+ifconfig 4	ciao = 1;
+ifconfig 5	contro = 1;
+ifconfig 6	antagonista = 1;
+//
+consolidate;
+//
+select x = 1;
+select aa = 1;
+select a = 1;
+select antonio = 1;
+select anto = 1;
+select ciaociao = 1;
+select cociao = 1;
+select ciao = 1;
+select contro = 1;
+select ant = 1;
+select anta = 1;
+select antagonista = 1;

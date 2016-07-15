@@ -1,0 +1,17 @@
+//
+ifconfig 3 x any integer;
+ifconfig 4 y any integer;
+//
+consolidate;
+//
+select x = -1;
+select x = 0;
+select x = 6;
+select y = 7;
+select y = 8;
+select y = 200;
+//
+select x = "a";
+select x = true;
+select y = "s";
+select y = false;

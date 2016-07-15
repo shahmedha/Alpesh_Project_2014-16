@@ -1,0 +1,20 @@
+The Siena forwarding algorithm was originally developed by:
+
+	Antonio Carzaniga (firstname.lastname@usi.ch)
+	Jing Deng 
+	Alexander L. Wolf 
+
+and is currently being developed and maintained by:
+
+	Antonio Carzaniga (firstname.lastname@usi.ch)
+
+Signifcant contributions also by:
+
+	Paolo Bonzini <bonzini@gnu.org>
+
+
+ACKNOWLEDGMENTS
+
+The authors would like to thank David Rosenblum for the numerous
+discussions that helped shape and refine the ideas underlying this
+work.

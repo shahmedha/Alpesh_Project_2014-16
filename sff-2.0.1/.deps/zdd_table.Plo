@@ -1,0 +1,5 @@
+zdd_table.lo: zdd_table.cc /usr/include/stdc-predef.h config.h
+
+/usr/include/stdc-predef.h:
+
+config.h:

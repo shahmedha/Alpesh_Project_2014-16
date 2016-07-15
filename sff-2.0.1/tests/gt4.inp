@@ -1,0 +1,23 @@
+ifconfig 4 x > 7;
+ifconfig 3 x > 5;
+ifconfig 1 x > 2;
+ifconfig 2 x > 3;
+ifconfig 5 x > 11;
+ifconfig 6 x > 13;
+ifconfig 7 x > 17;
+ifconfig 8 x > 19;
+//
+select x = 100;
+select x = 20;
+select x = 19;
+select x = 18;
+select x = 17;
+select x = 8;
+select x = 7;
+select x = 6;
+select x = 5;
+select x = 4;
+select x = 3;
+select x = 2;
+select x = 0;
+//

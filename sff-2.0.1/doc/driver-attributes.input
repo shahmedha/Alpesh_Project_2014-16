@@ -1,0 +1,162 @@
+// 
+// C-style and C++-style comments are allowed.
+//
+ifconfig 2	price < 500,
+		dest = "MXP",
+		classes ** "Y"				// ** means substring
+	|
+		alert = "connection refused",
+		host = "www.example.com",
+		port = 23
+	|
+		auction_group =* "guitars/electric",	// =* means prefix
+		maker = "PRS",
+		price < 2000 
+;
+		
+//
+// interface numbers do not have to be consecutive, 
+// nor they have to always increasing.  However, they have to be *unique*!
+//
+ifconfig 10	dest = "LGA",
+		price < 300
+	|
+		system = "Siena",
+		new_release = true
+	|
+		team > "d",
+		team < "s",
+		score > 0
+;
+
+//
+// you can specify constaints for any value and/or any type.
+//
+ifconfig 20	dest any string,
+		price < 300
+	|
+		system = "Siena",
+		release any any
+;
+
+//
+// if an attribute name starts with a digit, or if it contains special
+// characters, you can quote it as a string.
+//
+ifconfig 30	dest = "LUG",
+		price < 500,
+		"30-day-cancellation" = true
+;
+
+//
+// you can specify constaints for any value and/or any type.
+//
+
+//
+// before using the forwarding table to process messages, 
+// we *must* consolidate its data structures.  
+//
+consolidate;
+
+//
+// the driver has the ability to collect statistics regarding the
+// forwarding table, including the amount of processing (user) time
+//
+timer start;
+
+select		carrier = "UA"
+		orig = "DEN"
+		dest = "MXP"
+		price = 700
+		stops = 1
+		classes = "Q,Y,P,F" 
+;
+
+select		carrier = "UA"
+		orig = "DEN"
+		dest = "LGA"
+		price = 200
+		stops = 0
+		classes = "Y,P"
+;
+
+timer stop;
+statistics;
+//
+// we can also change the number of pre-processing rounds here...
+//
+set preprocessing_limit = 20;
+timer start;
+
+select		carrier = "UA"
+		orig = "DEN"
+		dest = "MXP"
+		price = 700
+		stops = 1
+		classes = "Q,Y,P,QF" ;
+
+select		carrier = "UA"
+		orig = "DEN"
+		dest = "LGA"
+		price = 200
+		stops = 0
+		classes = "Y,P" ;
+timer stop;
+//
+// we can clear the forwarding table using this command
+//
+clear;
+//
+// clear also deallocates all the memory used by the forwarding table
+// in order to clear the table maintaining (i.e., recycling) the
+// allocated memory, we could use this:
+// 
+// clear recycle;
+//
+
+//
+// The following directives are supported:
+//
+// statistics [format-string]
+// prints the current statistics using the given format string, or the
+// preconfigured format string if none is given
+//
+// set statistics_only = true
+// only reads and counts the input predicates and messages, without
+// compiling or a forwarding table.  This might be useful to count the
+// number of filters, predicates, constraints, etc. in a particular
+// file.
+//
+// timer start;
+// starts the performance timers
+//
+// timer stop;
+// stops the performance timers
+//
+// output on;
+// activates the normal output of the matcher 
+//
+// output off;
+// suppresses the normal output of the matcher
+//
+// output > [filename];
+// redirects the output of the matcher to the given file, or to
+// standard output if a name is not given
+//
+// set preprocessing_limit = <N>;
+// sets the number of preprocessing rounds for the FwdTable algorithm.
+//
+// clear;
+// clears the forwarding table.  This is necessary to reconstruct the
+// table (from scratch).  This operation also releases the memory allocated
+// for the forwwarding table.
+//
+// clear recycle;
+// clears the forwarding table without releasing the allocated memory.
+// This means that the memory will be recycled for the new content of
+// the table.
+//
+// consolidate;
+// consolidates the current value of the forwarding table.  This is
+// *necessary* before the forwarding table can be used for matching.
+//

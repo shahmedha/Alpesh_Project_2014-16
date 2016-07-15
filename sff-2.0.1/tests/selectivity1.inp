@@ -1,0 +1,26 @@
+//
+ifconfig 1 x = 1 | x > 10, x < 20;
+ifconfig 2 x = 1, y = 8 | x > 10, x < 20;
+ifconfig 3 x = 1 | x > 10, x < 20, y = 8;
+ifconfig 4 a = 1, b = 2, c = 3;
+ifconfig 5 a = 1, b = 2, c = 3 | b = 4, c = 5;
+ifconfig 6 a = 1, b = 2, c = 3 | b = 4, c = 5 | c = 6;
+ifconfig 7 a = 1, b = 2, c = 3 | b = 4, c = 5 | c = 6 | x = 100;
+ifconfig 8 s = 1, t = 1 | a = 1, s = 2, t = 3, b = 4 | t = 2;
+
+consolidate;
+
+//
+select x = 0;
+select x = 1;
+select x = 15;
+select y = 6;
+select y = 7;
+select y = 8;
+select a = 1 b = 2 c = 3 x = 15;
+select a = 1 c = 3 x = 15;
+select aa = 2 b = 4 c = 5;
+select aa = 2 c = 5;
+select aa = 2 c = 6;
+select x = 100;
+select s = 1 t = 2;

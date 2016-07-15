@@ -1,0 +1,298 @@
+body {	
+    background: #f0f0e0; 
+    font-family: Helvetica, sans-serif; 
+    font-weight: normal;
+    font-size: medium;
+    list-style: outside;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.headline {
+    margin: 0;
+    border: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: right;
+    clear: both;
+    background-color: #d0d0b0;
+}
+
+.footer {
+    margin: 0;
+    border: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: left;
+    clear: both;
+    background-color: #d0d0b0;
+}
+
+.line {
+    font-family: monospace;
+}
+
+.normaltext {
+    margin: 0;
+    padding: 0;
+}
+
+div.header {
+    margin: 0;
+    width: 100%;
+}
+
+span.mlabels {
+    padding-left: 10px;
+    font-style:italic;
+}
+
+div.headertitle {
+    background-color: #A0A080;
+    padding:          5px 10px 5px 10px;
+    font-size:larger;
+    font-weight:bold;
+    text-align:       left;
+    box-shadow:       0px 3px 5px #777;
+    margin: 0;
+}
+
+div.contents {
+    box-shadow: 0px 3px 10px #777;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    background-color: white;
+    padding: 5px 15px; 
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+div.fragment {
+    padding: 10px;
+    border: 1px solid #A0A080;
+    background-color: #FCFCFA;
+}
+
+div.line {
+    white-space: pre;
+}
+
+.keyword       { font-weight: bold; color: #000000 }
+.keywordtype   { color: #005030 }
+.keywordflow   { font-weight: bold; color: #000000 }
+.comment       { font-style: italic; color: #808080 }
+.preprocessor  { color: #206020 }
+.stringliteral { color: #208000 }
+.charliteral   { color: #809050 }
+
+A:link { 
+    color: #603000; 
+    text-decoration: none;
+    font-weight: bold; 
+} 
+A:visited { 
+    color: #603000; 
+    text-decoration: none;
+    font-weight: bold; 	
+}
+A:hover {
+    color: #603000; 
+    text-decoration: underline;
+    font-weight: bold; 	
+}
+
+A.el:link { text-decoration: none; font-weight: bold; color: #905000; } 
+A.el:visited { text-decoration: none; font-weight: bold; color: #905000; }
+A.el:hover { text-decoration: underline; font-weight: bold; italic; color: #905000; }
+
+A.code:link { font-weight: bold; text-decoration: none; }
+A.code:hover { font-weight: bold; text-decoration: underline; }
+A.code:visited { font-weight: bold; text-decoration: none; }
+
+table.memberdecls {
+    border-spacing: 0px;
+    padding: 0px;
+}
+
+.mdescLeft, .mdescRight,
+.memItemLeft, .memItemRight,
+.memTemplItemLeft, .memTemplItemRight, .memTemplParams {
+    background-color: #f0f0e8;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.memItemLeft, .memItemRight, .memTemplParams {
+    border-top: 1px solid #A0A080;
+}
+
+.memItemLeft, .memTemplItemLeft {
+    white-space: nowrap;
+}
+
+.memItemRight {
+    width: 100%;
+}
+
+.memTemplParams {
+    color: #c0c000;
+    white-space: nowrap;
+}
+
+.memSeparator {
+    margin: 0;
+    padding: 0;
+    height: 12px;
+    font-size: 0pt;
+}
+
+/* Styles for detailed member documentation */
+
+.memtemplate {
+    font-size: 80%;
+    color: #4665A2;
+    font-weight: normal;
+    margin-left: 10px;
+}
+
+.memnav {
+    background-color: #f0f0e0;
+    border: 1px solid #A0A080;
+    text-align: center;
+    margin: 2px;
+    margin-right: 15px;
+    padding: 0;
+}
+
+.mempage {
+    width: 100%;
+}
+
+.memitem {
+    padding: 0;
+    border: 1px solid #A0A080;
+    margin-bottom: 20px;
+    margin-right: 0px;
+}
+
+.memname {
+    white-space: nowrap;
+    font-weight: bold;
+    margin-left: 6px;
+}
+
+.memproto, dl.reflist dt {
+    padding: 0;
+    font-weight: bold;
+    font-size: large;
+    background-color: #e0e0c0;
+}
+
+.memdoc, dl.reflist dd {
+    padding: 10px 10px;
+    background-color: #FCFCFA;
+    border-top-width: 0;
+}
+
+dl.reflist dt {
+    padding: 5px;
+}
+
+dl.reflist dd {
+    margin: 0px 0px 10px 0px;
+    padding: 5px;
+}
+
+.paramkey {
+    text-align: right;
+}
+
+.paramtype {
+    white-space: nowrap;
+}
+
+.paramname {
+    color: #602020;
+/*    white-space: nowrap; */
+}
+.paramname em {
+    font-style: normal;
+}
+
+.params, .retval, .exception, .tparams {
+    border-spacing: 6px 2px;
+}
+
+.params .paramname, .retval .paramname {
+    font-weight: bold;
+    vertical-align: top;
+}
+
+.params .paramtype {
+    font-style: italic;
+    vertical-align: top;
+}
+
+.params .paramdir {
+    font-family: monospace;
+    vertical-align: top;
+}
+
+.tabs, .tabs2 {
+    border-top: 1px solid #A0A080;
+    padding: 0 0 0 0;
+    margin: 0;
+}
+
+.tablist li {
+    display: inline;
+    list-style-type: none;
+}
+
+.tablist {
+    padding: 0;
+    margin: 0;
+}
+
+.navpath li {
+    display: inline;
+    list-style-type: none;
+}
+
+.navpath { 
+    border-top: 1px solid #A0A080;
+    padding: 0;
+    margin: 0;
+}
+
+.navpath ul {
+    padding: 0;
+    margin: 0;
+}
+
+.tablist a, .navelem a {
+    text-decoration: none;
+    outline: none;
+    padding: 0 10px 0 10px;
+}
+
+.tablist a:hover, .navelem a:hover {
+    background-color:A0A080;
+    text-decoration: none;
+}
+
+div.summary {
+    float: right;
+    font-size: small;
+    padding-right: 5px;
+    width: 50%;
+    text-align: right;
+}
+
+.fielddoc,.fieldname {
+    border-top: 1px solid #A0A080;
+    vertical-align: top;
+}
